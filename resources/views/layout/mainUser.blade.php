@@ -29,7 +29,9 @@
                 @yield('content')
             </main>
 
-            {{-- @include('component.footer') --}}
+            @include('component.footer')
+            
+            @include('component.scrollToTop')
         </div>
 
         <div class="drawer-side z-50">
