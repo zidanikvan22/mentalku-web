@@ -30,7 +30,7 @@
             </main>
 
             @include('component.footer')
-            
+
             @include('component.scrollToTop')
         </div>
 
@@ -40,6 +40,49 @@
             @include('component.sidebar')
         </div>
     </div>
+
+    @include('auth.login')
+    @include('auth.register')
+
+    <script>
+        // Fungsi Buka/Tutup Modal Login
+        function toggleLoginModal() {
+            const modal = document.getElementById('loginModal');
+            // Pastikan di file login.blade.php ID-nya: id="loginModal"
+            if (modal) modal.classList.toggle('hidden');
+        }
+
+        // Fungsi Buka/Tutup Modal Register
+        function toggleRegisterModal() {
+            const modal = document.getElementById('registerModal');
+            // Pastikan di file register.blade.php ID-nya: id="registerModal"
+            if (modal) modal.classList.toggle('hidden');
+        }
+
+        // Pindah dari Login ke Register
+        function switchToRegister() {
+            toggleLoginModal(); // Tutup Login
+            setTimeout(() => {
+                toggleRegisterModal(); // Buka Register
+            }, 200);
+        }
+
+        // Pindah dari Register ke Login
+        function switchToLogin() {
+            toggleRegisterModal(); // Tutup Register
+            setTimeout(() => {
+                toggleLoginModal(); // Buka Login
+            }, 200);
+        }
+
+        function closeSidebar() {
+            // Uncheck checkbox drawer (sesuai ID di mainUser.blade.php)
+            const drawerCheckbox = document.getElementById('my-drawer-3');
+            if (drawerCheckbox) {
+                drawerCheckbox.checked = false;
+            }
+        }
+    </script>
 
 </body>
 

@@ -30,8 +30,15 @@
         </ul>
 
         <div class="flex gap-3">
-            <a href="" class="btn btn-outline btn-sm px-6 rounded-full">Masuk</a>
-            <a href="" class="btn btn-primary bg-[#294C60] hover:bg-[#1f3a4a] text-white btn-sm px-6 rounded-full">Daftar</a>
+            <button onclick="toggleLoginModal()"
+                class="btn btn-outline btn-sm px-6 rounded-full hover:bg-[#294C60] hover:text-white transition-colors">
+                Masuk
+            </button>
+
+            <button onclick="toggleRegisterModal()"
+                class="btn btn-primary bg-[#294C60] hover:bg-[#1f3a4a] text-white btn-sm px-6 rounded-full border-none">
+                Daftar
+            </button>
         </div>
     </div>
 </div>
