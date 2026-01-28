@@ -5,7 +5,7 @@
     <div class="relative min-h-screen md:min-h-0 flex items-center justify-center p-6">
 
         <div
-            class="bg-white w-full max-w-4xl rounded-[30px] shadow-2xl overflow-hidden flex flex-col md:flex-row relative animate-fade-in-up">
+            class="bg-[#FBF8F0] w-full max-w-4xl rounded-[30px] shadow-2xl overflow-hidden flex flex-col md:flex-row relative animate-fade-in-up">
 
             <button onclick="toggleLoginModal()"
                 class="absolute top-4 right-4 z-50 btn btn-circle btn-sm btn-ghost text-slate-400 hover:text-slate-600">
@@ -18,7 +18,7 @@
                     class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
                 </div>
 
-                <img src="{{ asset('assets/img/illustrations/ilustrasi_v1.png') }}"
+                <img src="{{ asset('assets/img/illustrations/ilustrasi_v3.png') }}"
                     class="w-64 mb-6 drop-shadow-xl relative z-10">
                 <h3 class="text-2xl font-bold text-[#294C60] relative z-10">Hai, kamu tidak sendiri!</h3>
                 <p class="text-slate-600 mt-2 relative z-10">Bergabunglah dengan MentalKU dan temukan dukungan untuk
