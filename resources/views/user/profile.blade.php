@@ -3,300 +3,303 @@
 @section('title', 'Profil Saya - MentalKU')
 
 @section('content')
-    <div class="pt-24 lg:pt-32"></div>
+<div class="pt-24 lg:pt-32"></div>
 
-    <section class="container mx-auto px-4 md:px-10 mb-20">
+<section class="container mx-auto px-4 md:px-10 mb-20">
 
-        <div class="max-w-5xl mx-auto bg-[#E0F2FE] rounded-[40px] shadow-xl overflow-hidden mb-16 animate-fade-in-up">
+    <div class="max-w-5xl mx-auto bg-[#E0F2FE] rounded-[40px] shadow-xl overflow-hidden mb-16 animate-fade-in-up">
+
+        <div
+            class="bg-white/50 backdrop-blur-sm p-6 md:p-12 flex flex-col md:flex-row items-center gap-6 border-b border-white/50">
+            <div class="w-24 h-24 md:w-40 md:h-40 rounded-full bg-white p-2 shadow-lg relative group">
+                <img src="https://ui-avatars.com/api/?name=Zidan+Muhammad&background=294C60&color=fff&size=256"
+                    alt="Avatar" class="w-full h-full rounded-full object-cover border-4 border-[#E0F2FE]">
+
+                <button
+                    class="absolute bottom-2 right-2 bg-[#FF8966] text-white p-2 rounded-full shadow-md hover:bg-orange-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path
+                            d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="text-center md:text-left flex-grow">
+                <h1 class="text-2xl md:text-4xl font-extrabold text-[#294C60] mb-1">Zidan Muhammad Ikvan</h1>
+                <p class="text-slate-500 text-base font-medium mb-4">@iyobaiyo</p>
+
+                <!-- MADE CHANGE: force horizontal alignment on mobile, allow wrap -->
+                <div class="flex flex-row flex-wrap gap-3 justify-center md:justify-start">
+
+                    <button
+                        class="btn bg-[#FF8966] hover:bg-orange-600 text-white border-none rounded-full px-4 md:px-8 py-2 shadow-lg hover:shadow-orange-200/50 normal-case min-w-[110px] md:min-w-[140px]">
+                        Edit Profil
+                    </button>
+
+                    <form action="" method="POST" class="inline-block">
+                        @csrf
+                        <button type="submit"
+                            class="btn btn-outline border-rose-500 text-rose-500 hover:bg-rose-50 hover:border-rose-600 hover:text-rose-600 rounded-full px-4 md:px-8 py-2 normal-case min-w-[110px] md:min-w-[140px] flex items-center gap-2 group">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 group-hover:-translate-x-1 transition-transform" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                            </svg>
+                            Keluar
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6 md:p-12">
+            <!-- MADE CHANGE: smaller gaps on mobile -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 md:gap-y-8 gap-x-6 md:gap-x-12">
+
+                <div class="space-y-5">
+                    <h3 class="text-xl font-bold text-[#294C60] border-b border-slate-300/50 pb-2 mb-3">Informasi Dasar
+                    </h3>
+
+                    <div class="flex items-start gap-3">
+                        <div
+                            class="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white flex items-center justify-center text-[#0D9488] shadow-sm shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 uppercase font-bold tracking-wider">Nama Lengkap</p>
+                            <p class="text-base md:text-lg font-semibold text-[#294C60]">Zidan Muhammad Ikvan</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <div
+                            class="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white flex items-center justify-center text-[#0D9488] shadow-sm shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 uppercase font-bold tracking-wider">Email</p>
+                            <p class="text-base md:text-lg font-semibold text-[#294C60]">zidan@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <div
+                            class="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white flex items-center justify-center text-[#0D9488] shadow-sm shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 uppercase font-bold tracking-wider">Tanggal Lahir</p>
+                            <p class="text-base md:text-lg font-semibold text-[#294C60]">20 Juli 2004</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <div
+                            class="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white flex items-center justify-center text-[#0D9488] shadow-sm shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path
+                                    d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 uppercase font-bold tracking-wider">Nomor HP / WA</p>
+                            <p class="text-base md:text-lg font-semibold text-[#294C60]">081234561234</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-5">
+                    <h3 class="text-xl font-bold text-[#294C60] border-b border-slate-300/50 pb-2 mb-3">Informasi
+                        Tambahan</h3>
+
+                    <div class="flex items-start gap-3">
+                        <div
+                            class="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white flex items-center justify-center text-[#FF8966] shadow-sm shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
+                                    clip-rule="evenodd" />
+                                <path
+                                    d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 uppercase font-bold tracking-wider">Pekerjaan</p>
+                            <p class="text-base md:text-lg font-semibold text-[#294C60]">Mahasiswa</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <div
+                            class="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white flex items-center justify-center text-[#FF8966] shadow-sm shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 uppercase font-bold tracking-wider">Kota/Kabupaten</p>
+                            <p class="text-base md:text-lg font-semibold text-[#294C60]">Edinburg</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <div
+                            class="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white flex items-center justify-center text-[#FF8966] shadow-sm shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path
+                                    d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 uppercase font-bold tracking-wider">Pendidikan Terakhir</p>
+                            <p class="text-base md:text-lg font-semibold text-[#294C60]">Strata 2</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-slate-300/50 text-center">
+                <p class="text-sm text-slate-500">
+                    * Informasi Anda tetap <span class="font-bold text-[#294C60]">pribadi dan aman</span>. Untuk
+                    rincian
+                    lebih lanjut, silakan baca <a href="#" class="text-[#0D9488] hover:underline">kebijakan
+                        privasi</a> kami.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="max-w-5xl mx-auto animate-fade-in-up delay-100">
+
+        <!-- MADE CHANGE: items-start so header sits left on mobile -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+            <h2 class="text-2xl md:text-3xl font-extrabold text-[#294C60]">Riwayat Aktivitas</h2>
+
+            <div class="flex gap-2 w-full md:w-auto">
+                <div class="relative w-full md:w-64">
+                    <input type="text" placeholder="Cari..."
+                        class="input input-bordered w-full rounded-full pl-10 focus:outline-[#0D9488]">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+                <button
+                    class="btn btn-outline border-slate-300 hover:bg-[#E0F2FE] hover:border-[#0D9488] hover:text-[#0D9488] text-slate-500 rounded-full normal-case">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                    </svg>
+                    Urutkan
+                </button>
+            </div>
+        </div>
+
+        <div class="space-y-4">
 
             <div
-                class="bg-white/50 backdrop-blur-sm p-8 md:p-12 flex flex-col md:flex-row items-center gap-8 border-b border-white/50">
-                <div class="w-32 h-32 md:w-40 md:h-40 rounded-full bg-white p-2 shadow-lg relative group">
-                    <img src="https://ui-avatars.com/api/?name=Zidan+Muhammad&background=294C60&color=fff&size=256"
-                        alt="Avatar" class="w-full h-full rounded-full object-cover border-4 border-[#E0F2FE]">
-
-                    <button
-                        class="absolute bottom-2 right-2 bg-[#FF8966] text-white p-2 rounded-full shadow-md hover:bg-orange-600 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path
-                                d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                        </svg>
-                    </button>
-                </div>
-
-                <div class="text-center md:text-left flex-grow">
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-[#294C60] mb-2">Zidan Muhammad Ikvan</h1>
-                    <p class="text-slate-500 text-lg font-medium mb-6">@iyobaiyo</p>
-
-                    <div class="flex flex-col md:flex-row gap-3 justify-center md:justify-start">
-
-                        <button
-                            class="btn bg-[#FF8966] hover:bg-orange-600 text-white border-none rounded-full px-8 shadow-lg hover:shadow-orange-200/50 normal-case min-w-[140px]">
-                            Edit Profil
-                        </button>
-
-                        <form action="" method="POST" class="inline-block">
-                            @csrf
-                            <button type="submit"
-                                class="btn btn-outline border-rose-500 text-rose-500 hover:bg-rose-50 hover:border-rose-600 hover:text-rose-600 rounded-full px-8 normal-case min-w-[140px] flex items-center gap-2 group">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5 group-hover:-translate-x-1 transition-transform" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                </svg>
-                                Keluar
-                            </button>
-                        </form>
-
+                class="bg-white rounded-2xl p-4 md:p-6 shadow-md border-l-8 border-[#F43F5E] hover:shadow-lg transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <div class="flex items-center gap-3 mb-1">
+                        <h3 class="text-lg font-bold text-[#294C60]">Evaluasi Diri 1</h3>
+                        <span class="bg-rose-100 text-[#F43F5E] text-xs font-bold px-3 py-1 rounded-full">Tinggi</span>
                     </div>
-                </div>
-            </div>
-
-            <div class="p-8 md:p-12">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-12">
-
-                    <div class="space-y-6">
-                        <h3 class="text-xl font-bold text-[#294C60] border-b border-slate-300/50 pb-2 mb-4">Informasi Dasar
-                        </h3>
-
-                        <div class="flex items-start gap-4">
-                            <div
-                                class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#0D9488] shadow-sm shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-xs text-slate-500 uppercase font-bold tracking-wider">Nama Lengkap</p>
-                                <p class="text-lg font-semibold text-[#294C60]">Zidan Muhammad Ikvan</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-4">
-                            <div
-                                class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#0D9488] shadow-sm shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-xs text-slate-500 uppercase font-bold tracking-wider">Email</p>
-                                <p class="text-lg font-semibold text-[#294C60]">zidan@gmail.com</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-4">
-                            <div
-                                class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#0D9488] shadow-sm shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-xs text-slate-500 uppercase font-bold tracking-wider">Tanggal Lahir</p>
-                                <p class="text-lg font-semibold text-[#294C60]">20 Juli 2004</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-4">
-                            <div
-                                class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#0D9488] shadow-sm shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path
-                                        d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-xs text-slate-500 uppercase font-bold tracking-wider">Nomor HP / WA</p>
-                                <p class="text-lg font-semibold text-[#294C60]">081234561234</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="space-y-6">
-                        <h3 class="text-xl font-bold text-[#294C60] border-b border-slate-300/50 pb-2 mb-4">Informasi
-                            Tambahan</h3>
-
-                        <div class="flex items-start gap-4">
-                            <div
-                                class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#FF8966] shadow-sm shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
-                                        clip-rule="evenodd" />
-                                    <path
-                                        d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-xs text-slate-500 uppercase font-bold tracking-wider">Pekerjaan</p>
-                                <p class="text-lg font-semibold text-[#294C60]">Mahasiswa</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-4">
-                            <div
-                                class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#FF8966] shadow-sm shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-xs text-slate-500 uppercase font-bold tracking-wider">Kota/Kabupaten</p>
-                                <p class="text-lg font-semibold text-[#294C60]">Edinburg</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-4">
-                            <div
-                                class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#FF8966] shadow-sm shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path
-                                        d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-xs text-slate-500 uppercase font-bold tracking-wider">Pendidikan Terakhir</p>
-                                <p class="text-lg font-semibold text-[#294C60]">Strata 2</p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="mt-10 pt-6 border-t border-slate-300/50 text-center">
-                    <p class="text-sm text-slate-500">
-                        * Informasi Anda tetap <span class="font-bold text-[#294C60]">pribadi dan aman</span>. Untuk
-                        rincian
-                        lebih lanjut, silakan baca <a href="#" class="text-[#0D9488] hover:underline">kebijakan
-                            privasi</a> kami.
+                    <p class="text-sm text-slate-400 mb-2">18 Mei 2025, 20:30</p>
+                    <p class="text-sm font-medium text-slate-600">
+                        Skor: Depresi (<span class="text-[#F43F5E]">18</span>), Kecemasan (15), Stres (19)
                     </p>
                 </div>
-            </div>
-        </div>
-
-
-        <div class="max-w-5xl mx-auto animate-fade-in-up delay-100">
-
-            <div class="flex flex-col md:flex-row justify-between items-end md:items-center mb-8 gap-4">
-                <h2 class="text-2xl md:text-3xl font-extrabold text-[#294C60]">Riwayat Aktivitas</h2>
-
-                <div class="flex gap-2 w-full md:w-auto">
-                    <div class="relative w-full md:w-64">
-                        <input type="text" placeholder="Cari..."
-                            class="input input-bordered w-full rounded-full pl-10 focus:outline-[#0D9488]">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"
-                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                    </div>
-                    <button
-                        class="btn btn-outline border-slate-300 hover:bg-[#E0F2FE] hover:border-[#0D9488] hover:text-[#0D9488] text-slate-500 rounded-full normal-case">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
-                        </svg>
-                        Urutkan
-                    </button>
-                </div>
+                <button class="btn btn-circle btn-ghost text-slate-400 hover:bg-slate-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+                    </svg>
+                </button>
             </div>
 
-            <div class="space-y-4">
-
-                <div
-                    class="bg-white rounded-2xl p-6 shadow-md border-l-8 border-[#F43F5E] hover:shadow-lg transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <div>
-                        <div class="flex items-center gap-3 mb-1">
-                            <h3 class="text-lg font-bold text-[#294C60]">Evaluasi Diri 1</h3>
-                            <span class="bg-rose-100 text-[#F43F5E] text-xs font-bold px-3 py-1 rounded-full">Tinggi</span>
-                        </div>
-                        <p class="text-sm text-slate-400 mb-2">18 Mei 2025, 20:30</p>
-                        <p class="text-sm font-medium text-slate-600">
-                            Skor: Depresi (<span class="text-[#F43F5E]">18</span>), Kecemasan (15), Stres (19)
-                        </p>
+            <div
+                class="bg-white rounded-2xl p-4 md:p-6 shadow-md border-l-8 border-[#F59E0B] hover:shadow-lg transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <div class="flex items-center gap-3 mb-1">
+                        <h3 class="text-lg font-bold text-[#294C60]">Evaluasi Diri 2</h3>
+                        <span
+                            class="bg-amber-100 text-[#F59E0B] text-xs font-bold px-3 py-1 rounded-full">Sedang</span>
                     </div>
-                    <button class="btn btn-circle btn-ghost text-slate-400 hover:bg-slate-100">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
-                        </svg>
-                    </button>
+                    <p class="text-sm text-slate-400 mb-2">16 April 2025, 22:30</p>
+                    <p class="text-sm font-medium text-slate-600">
+                        Skor: Depresi (15), Kecemasan (10), Stres (<span class="text-[#F59E0B]">12</span>)
+                    </p>
                 </div>
-
-                <div
-                    class="bg-white rounded-2xl p-6 shadow-md border-l-8 border-[#F59E0B] hover:shadow-lg transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <div>
-                        <div class="flex items-center gap-3 mb-1">
-                            <h3 class="text-lg font-bold text-[#294C60]">Evaluasi Diri 2</h3>
-                            <span
-                                class="bg-amber-100 text-[#F59E0B] text-xs font-bold px-3 py-1 rounded-full">Sedang</span>
-                        </div>
-                        <p class="text-sm text-slate-400 mb-2">16 April 2025, 22:30</p>
-                        <p class="text-sm font-medium text-slate-600">
-                            Skor: Depresi (15), Kecemasan (10), Stres (<span class="text-[#F59E0B]">12</span>)
-                        </p>
-                    </div>
-                    <button class="btn btn-circle btn-ghost text-slate-400 hover:bg-slate-100">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
-                        </svg>
-                    </button>
-                </div>
-
-                <div
-                    class="bg-white rounded-2xl p-6 shadow-md border-l-8 border-[#0D9488] hover:shadow-lg transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <div>
-                        <div class="flex items-center gap-3 mb-1">
-                            <h3 class="text-lg font-bold text-[#294C60]">Evaluasi Diri 3</h3>
-                            <span class="bg-teal-100 text-[#0D9488] text-xs font-bold px-3 py-1 rounded-full">Rendah</span>
-                        </div>
-                        <p class="text-sm text-slate-400 mb-2">10 Maret 2025, 09:15</p>
-                        <p class="text-sm font-medium text-slate-600">
-                            Skor: Depresi (5), Kecemasan (6), Stres (6)
-                        </p>
-                    </div>
-                    <button class="btn btn-circle btn-ghost text-slate-400 hover:bg-slate-100">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
-                        </svg>
-                    </button>
-                </div>
-
+                <button class="btn btn-circle btn-ghost text-slate-400 hover:bg-slate-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+                    </svg>
+                </button>
             </div>
 
-            <div class="flex justify-center mt-10">
-                <div class="join shadow-sm">
-                    <button class="join-item btn btn-sm bg-white border-slate-200">«</button>
-                    <button class="join-item btn btn-sm bg-[#294C60] text-white border-[#294C60]">1</button>
-                    <button class="join-item btn btn-sm bg-white border-slate-200">2</button>
-                    <button class="join-item btn btn-sm bg-white border-slate-200">3</button>
-                    <button class="join-item btn btn-sm bg-white border-slate-200">»</button>
+            <div
+                class="bg-white rounded-2xl p-4 md:p-6 shadow-md border-l-8 border-[#0D9488] hover:shadow-lg transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <div class="flex items-center gap-3 mb-1">
+                        <h3 class="text-lg font-bold text-[#294C60]">Evaluasi Diri 3</h3>
+                        <span class="bg-teal-100 text-[#0D9488] text-xs font-bold px-3 py-1 rounded-full">Rendah</span>
+                    </div>
+                    <p class="text-sm text-slate-400 mb-2">10 Maret 2025, 09:15</p>
+                    <p class="text-sm font-medium text-slate-600">
+                        Skor: Depresi (5), Kecemasan (6), Stres (6)
+                    </p>
                 </div>
+                <button class="btn btn-circle btn-ghost text-slate-400 hover:bg-slate-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+                    </svg>
+                </button>
             </div>
 
         </div>
 
-    </section>
+        <div class="flex justify-center mt-10">
+            <div class="join shadow-sm">
+                <button class="join-item btn btn-sm bg-white border-slate-200">«</button>
+                <button class="join-item btn btn-sm bg-[#294C60] text-white border-[#294C60]">1</button>
+                <button class="join-item btn btn-sm bg-white border-slate-200">2</button>
+                <button class="join-item btn btn-sm bg-white border-slate-200">3</button>
+                <button class="join-item btn btn-sm bg-white border-slate-200">»</button>
+            </div>
+        </div>
+
+    </div>
+
+</section>
 @endsection
