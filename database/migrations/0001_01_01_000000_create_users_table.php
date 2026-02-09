@@ -13,14 +13,35 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+
+            // Core Identity
+            $table->string('name'); // Nama Lengkap
+            $table->string('username')->unique(); // Username (Harus unik)
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+
+            // Demographics (Required at Register)
+            $table->enum('gender', ['Laki-laki', 'Perempuan']); // Sesuaikan dengan <select> di blade
+            $table->date('birth_date');
+
+            // Role Management (user, admin, doctor)
+            $table->string('role')->default('user');
+
+            // Extended Profile (Nullable - Diisi nanti di profile)
+            $table->string('phone')->nullable();
+            $table->string('job')->nullable();
+            $table->string('marital_status')->nullable();
+            $table->string('city')->nullable();
+            $table->string('living_condition')->nullable();
+            $table->string('education')->nullable();
+            $table->string('profile_photo_path')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
         });
 
+        // ... sisa code untuk password_reset_tokens dan sessions biarkan default
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');

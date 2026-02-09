@@ -19,8 +19,21 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username', // New
         'email',
         'password',
+        'gender', // New
+        'birth_date', // New
+        'role', // New
+        // Field optional profile nggak perlu dimasukin sini dulu gapapa, 
+        // tapi kalau mau future-proof masukin aja sekalian.
+        'phone',
+        'job',
+        'marital_status',
+        'city',
+        'living_condition',
+        'education',
+        'profile_photo_path',
     ];
 
     /**
