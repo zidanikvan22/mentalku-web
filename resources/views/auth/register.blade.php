@@ -17,63 +17,60 @@
                     <p class="text-slate-400 text-sm">Mulai perjalanan kesehatan mentalmu hari ini.</p>
                 </div>
 
-                <form action="#" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <form action="{{ route('register.process') }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     @csrf
 
                     <div class="form-control md:col-span-2">
-                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60]">Nama
-                                Lengkap</span></label>
-                        <input type="text" placeholder="John Doe"
-                            class="input input-bordered w-full focus:outline-[#0D9488]" />
+                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60]">Nama Lengkap</span></label>
+                        <input type="text" name="name" value="{{ old('name') }}" placeholder="John Doe" class="input input-bordered w-full focus:outline-[#0D9488]" required />
                     </div>
 
                     <div class="form-control">
-                        <label class="label py-1"><span
-                                class="label-text font-semibold text-[#294C60]">Username</span></label>
-                        <input type="text" placeholder="johndoe123"
-                            class="input input-bordered w-full focus:outline-[#0D9488]" />
+                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60]">Username</span></label>
+                        <input type="text" name="username" value="{{ old('username') }}" placeholder="johndoe123" class="input input-bordered w-full focus:outline-[#0D9488]" required />
                     </div>
 
                     <div class="form-control">
-                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60]">Jenis
-                                Kelamin</span></label>
-                        <select class="select select-bordered w-full focus:outline-[#0D9488]">
+                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60]">Jenis Kelamin</span></label>
+                        <select name="gender" class="select select-bordered w-full focus:outline-[#0D9488]" required>
                             <option disabled selected>Pilih...</option>
-                            <option>Laki-laki</option>
-                            <option>Perempuan</option>
+                            <option value="Laki-laki">Laki-laki</option>
+                            <option value="Perempuan">Perempuan</option>
                         </select>
                     </div>
 
                     <div class="form-control md:col-span-2">
-                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60]">Tanggal
-                                Lahir</span></label>
-                        <input type="date" class="input input-bordered w-full focus:outline-[#0D9488]" />
+                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60]">Tanggal Lahir</span></label>
+                        <input type="date" name="birth_date" value="{{ old('birth_date') }}" class="input input-bordered w-full focus:outline-[#0D9488]" required />
                     </div>
 
                     <div class="form-control md:col-span-2">
-                        <label class="label py-1"><span
-                                class="label-text font-semibold text-[#294C60]">Email</span></label>
-                        <input type="email" placeholder="email@contoh.com"
-                            class="input input-bordered w-full focus:outline-[#0D9488]" />
+                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60]">Email</span></label>
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="email@contoh.com" class="input input-bordered w-full focus:outline-[#0D9488]" required />
                     </div>
 
                     <div class="form-control">
-                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60]">Kata
-                                Sandi</span></label>
-                        <input type="password" placeholder="••••••••"
-                            class="input input-bordered w-full focus:outline-[#0D9488]" />
+                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60]">Kata Sandi</span></label>
+                        <input type="password" name="password" placeholder="••••••••" class="input input-bordered w-full focus:outline-[#0D9488]" required />
                     </div>
 
                     <div class="form-control">
-                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60]">Konfirmasi
-                                Sandi</span></label>
-                        <input type="password" placeholder="••••••••"
-                            class="input input-bordered w-full focus:outline-[#0D9488]" />
+                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60]">Konfirmasi Sandi</span></label>
+                        <input type="password" name="password_confirmation" placeholder="••••••••" class="input input-bordered w-full focus:outline-[#0D9488]" required />
                     </div>
 
                     <div class="md:col-span-2 mt-4">
-                        <button
-                            class="btn w-full bg-[#FF8966] hover:bg-orange-600 text-white border-none rounded-full shadow-lg text-lg">
+                        @if ($errors->any())
+                        <div class="alert alert-error mb-4">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                <li class="text-white text-xs">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
+
+                        <button type="submit" class="btn w-full bg-[#FF8966] hover:bg-orange-600 text-white border-none rounded-full shadow-lg text-lg">
                             Daftar Sekarang
                         </button>
                     </div>
