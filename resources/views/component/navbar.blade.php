@@ -30,15 +30,32 @@
         </ul>
 
         <div class="flex gap-3">
-            <button onclick="toggleLoginModal()"
-                class="btn btn-outline btn-sm px-6 rounded-full hover:bg-[#294C60] hover:text-white transition-colors">
-                Masuk
-            </button>
+            @guest
+                <button onclick="toggleLoginModal()"
+                    class="btn btn-outline btn-sm px-6 rounded-full hover:bg-[#294C60] hover:text-white transition-colors">
+                    Masuk
+                </button>
 
-            <button onclick="toggleRegisterModal()"
-                class="btn btn-primary bg-[#294C60] hover:bg-[#1f3a4a] text-white btn-sm px-6 rounded-full border-none">
-                Daftar
-            </button>
+                <button onclick="toggleRegisterModal()"
+                    class="btn btn-primary bg-[#294C60] hover:bg-[#1f3a4a] text-white btn-sm px-6 rounded-full border-none">
+                    Daftar
+                </button>
+            @endguest
+            @auth
+                <div class="flex items-center gap-3 bg-[#E0F2FE] py-1 pl-4 pr-2 rounded-full border border-slate-200">
+                    {{-- Nama Lengkap --}}
+                    <span class="font-bold text-[#294C60] text-sm truncate max-w-[150px]">
+                        {{ Auth::user()->name }}
+                    </span>
+
+                    {{-- Avatar Bulat --}}
+                    <div
+                        class="h-8 w-8 rounded-full bg-[#294C60] flex items-center justify-center text-white font-bold text-sm">
+                        {{-- Ambil huruf pertama dari Nama --}}
+                        {{ substr(Auth::user()->name, 0, 1) }}
+                    </div>
+                </div>
+            @endauth
         </div>
     </div>
 </div>

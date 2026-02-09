@@ -39,10 +39,17 @@
                     </p>
 
                     <div class="flex w-full justify-center lg:justify-start">
-                        <button
-                            class="btn bg-[#FF8966] hover:bg-orange-600 text-white border-none rounded-full px-8 h-12 min-h-[3rem] text-sm md:text-base font-semibold shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all w-full md:w-auto">
-                            Mulai Tes MentalKU
-                        </button>
+                        @auth
+                            <a href="{{ url('/self-evaluation-cover') }}"
+                                class="btn bg-[#FF8966] hover:bg-orange-600 text-white border-none rounded-full px-8 h-12 min-h-[3rem] text-sm md:text-base font-semibold shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all w-full md:w-auto flex items-center justify-center">
+                                Mulai Tes MentalKU
+                            </a>
+                        @else
+                            <button onclick="toggleLoginModal()"
+                                class="btn bg-[#FF8966] hover:bg-orange-600 text-white border-none rounded-full px-8 h-12 min-h-[3rem] text-sm md:text-base font-semibold shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all w-full md:w-auto">
+                                Mulai Tes MentalKU
+                            </button>
+                        @endauth
                     </div>
                 </div>
 
@@ -182,10 +189,18 @@
             </p>
 
             <div class="pt-4 flex flex-col items-center gap-3">
-                <button
-                    class="btn bg-orange-400 hover:bg-orange-500 text-white border-none rounded-full px-10 h-12 text-base font-bold shadow-lg hover:shadow-orange-200/50 transition-all">
-                    Mulai Tes MentalKU
-                </button>
+                @auth
+                    <a href="{{ url('/self-evaluation-cover') }}"
+                        class="btn bg-orange-400 hover:bg-orange-500 text-white border-none rounded-full px-10 h-12 text-base font-bold shadow-lg hover:shadow-orange-200/50 transition-all">
+                        Mulai Tes MentalKU
+                    </a>
+                @else
+                    <button onclick="toggleLoginModal()"
+                        class="btn bg-orange-400 hover:bg-orange-500 text-white border-none rounded-full px-10 h-12 text-base font-bold shadow-lg hover:shadow-orange-200/50 transition-all">
+                        Mulai Tes MentalKU
+                    </button>
+                @endauth
+
                 <p class="text-xs text-slate-400 font-medium">Gratis | Rahasia Aman | Hasil Instan</p>
             </div>
         </div>
