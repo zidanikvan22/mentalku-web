@@ -8,7 +8,7 @@
 <section class="container mx-auto px-4 md:px-10 mb-20">
 
     <div class="max-w-4xl mx-auto mb-8 flex items-center gap-4">
-        <a href="/profile" class="btn btn-circle btn-ghost text-slate-500 hover:bg-slate-100">
+        <a href="{{ route('profile.index') }}" class="btn btn-circle btn-ghost text-slate-500 hover:bg-slate-100">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
@@ -16,30 +16,24 @@
         <h1 class="text-3xl font-extrabold text-[#294C60]">Edit Profil</h1>
     </div>
 
-    <div
-        class="max-w-4xl mx-auto bg-white rounded-[40px] shadow-xl overflow-hidden border border-slate-100 animate-fade-in-up">
+    <div class="max-w-4xl mx-auto bg-white rounded-[40px] shadow-xl overflow-hidden border border-slate-100 animate-fade-in-up">
 
-        <form action="#" method="POST" enctype="multipart/form-data">
+        {{-- Perhatikan route action --}}
+        <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
+            {{-- HEADER: FOTO PROFIL --}}
             <div class="bg-[#E0F2FE] p-10 flex flex-col md:flex-row items-center gap-8 border-b border-slate-200">
-
                 <div class="relative group">
                     <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg bg-white">
-                        <img id="avatarPreview"
-                            src="https://ui-avatars.com/api/?name=Zidan+Muhammad&background=294C60&color=fff&size=256"
-                            alt="Avatar Preview" class="w-full h-full object-cover">
-                    </div>
-                    <div
-                        class="absolute inset-0 bg-black/30 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
+                        {{-- Preview Logic --}}
+                        @php
+                        $photoUrl = $user->profile_photo_path
+                        ? asset('storage/' . $user->profile_photo_path)
+                        : 'https://ui-avatars.com/api/?name='.urlencode($user->name).'&background=294C60&color=fff&size=256';
+                        @endphp
+                        <img id="avatarPreview" src="{{ $photoUrl }}" alt="Avatar Preview" class="w-full h-full object-cover">
                     </div>
                 </div>
 
@@ -48,140 +42,145 @@
                     <p class="text-sm text-slate-500 mb-2">Format: JPG, PNG (Max. 2MB)</p>
 
                     <div class="flex flex-wrap justify-center md:justify-start gap-3">
-                        <label
-                            class="btn bg-[#294C60] hover:bg-[#1f3a4a] text-white border-none rounded-full px-6 normal-case cursor-pointer shadow-md">
+                        <label class="btn bg-[#294C60] hover:bg-[#1f3a4a] text-white border-none rounded-full px-6 normal-case cursor-pointer shadow-md">
                             Ganti Gambar
-                            <input type="file" class="hidden" onchange="previewImage(this)">
+                            <input type="file" name="profile_photo" class="hidden" onchange="previewImage(this)">
                         </label>
 
-                        <button type="button"
+                        {{-- Button Hapus (Trigger JS) --}}
+                        <button type="button" onclick="markDeletePhoto()"
                             class="btn btn-outline border-rose-400 text-rose-500 hover:bg-rose-50 hover:border-rose-500 hover:text-rose-600 rounded-full px-6 normal-case">
                             Hapus
                         </button>
+                        {{-- Input Hidden buat flag delete --}}
+                        <input type="hidden" name="delete_photo" id="deletePhotoInput" value="0">
                     </div>
                 </div>
             </div>
 
+            {{-- FORM FIELDS --}}
             <div class="p-8 md:p-12 space-y-10">
 
+                {{-- INFORMASI DASAR (READ ONLY) --}}
                 <div>
-                    <h3
-                        class="flex items-center gap-2 text-xl font-bold text-[#294C60] border-b border-slate-200 pb-3 mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#0D9488]" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    <h3 class="flex items-center gap-2 text-xl font-bold text-[#294C60] border-b border-slate-200 pb-3 mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#0D9488]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
-                        Informasi Dasar
+                        Informasi Dasar (Tidak dapat diubah)
                     </h3>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {{-- Nama --}}
                         <div class="form-control">
                             <label class="label font-semibold text-slate-600">Nama Lengkap</label>
-                            <input type="text" value="Zidan Muhammad Ikvan"
-                                class="input input-bordered w-full rounded-xl focus:outline-[#0D9488] focus:border-[#0D9488]" />
+                            <input type="text" value="{{ $user->name }}" readonly
+                                class="input input-bordered w-full rounded-xl bg-slate-100 text-slate-500 cursor-not-allowed border-slate-200" />
                         </div>
 
+                        {{-- Username --}}
                         <div class="form-control">
                             <label class="label font-semibold text-slate-600">Username</label>
-                            <!-- <div class="relative"> -->
-                            <!-- <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">@</span> -->
-                            <input type="text" value="iyobaiyo"
-                                class="input input-bordered w-full rounded-xl focus:outline-[#0D9488] focus:border-[#0D9488]" />
-                            <!-- </div> -->
+                            <input type="text" value="{{ $user->username }}" readonly
+                                class="input input-bordered w-full rounded-xl bg-slate-100 text-slate-500 cursor-not-allowed border-slate-200" />
                         </div>
 
+                        {{-- Gender --}}
                         <div class="form-control">
                             <label class="label font-semibold text-slate-600">Jenis Kelamin</label>
-                            <select
-                                class="select select-bordered w-full rounded-xl focus:outline-[#0D9488] focus:border-[#0D9488]">
-                                <option>Laki-laki</option>
-                                <option>Perempuan</option>
-                            </select>
+                            <input type="text" value="{{ $user->gender }}" readonly
+                                class="input input-bordered w-full rounded-xl bg-slate-100 text-slate-500 cursor-not-allowed border-slate-200" />
                         </div>
 
+                        {{-- Tgl Lahir --}}
                         <div class="form-control">
                             <label class="label font-semibold text-slate-600">Tanggal Lahir</label>
-                            <input type="date" value="2004-07-20"
-                                class="input input-bordered w-full rounded-xl focus:outline-[#0D9488] focus:border-[#0D9488]" />
+                            <input type="date" value="{{ $user->birth_date }}" readonly
+                                class="input input-bordered w-full rounded-xl bg-slate-100 text-slate-500 cursor-not-allowed border-slate-200" />
                         </div>
 
+                        {{-- Email --}}
                         <div class="form-control md:col-span-2">
                             <label class="label font-semibold text-slate-600">Email</label>
-                            <input type="email" value="zidan@gmail.com"
-                                class="input input-bordered w-full rounded-xl focus:outline-[#0D9488] focus:border-[#0D9488]" />
+                            <input type="email" value="{{ $user->email }}" readonly
+                                class="input input-bordered w-full rounded-xl bg-slate-100 text-slate-500 cursor-not-allowed border-slate-200" />
                         </div>
 
+                        {{-- No HP (Editable) --}}
                         <div class="form-control md:col-span-2">
-                            <label class="label font-semibold text-slate-600">Nomor HP / WhatsApp</label>
-                            <input type="tel" value="081234561234"
+                            <label class="label font-semibold text-slate-600">Nomor HP / WhatsApp <span class="text-xs text-[#0D9488] ml-1">(Bisa diedit)</span></label>
+                            <input type="tel" name="phone" value="{{ old('phone', $user->phone) }}"
                                 class="input input-bordered w-full rounded-xl focus:outline-[#0D9488] focus:border-[#0D9488]" />
                         </div>
                     </div>
                 </div>
 
+                {{-- INFORMASI TAMBAHAN (EDITABLE) --}}
                 <div>
-                    <h3
-                        class="flex items-center gap-2 text-xl font-bold text-[#294C60] border-b border-slate-200 pb-3 mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#FF8966]" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    <h3 class="flex items-center gap-2 text-xl font-bold text-[#294C60] border-b border-slate-200 pb-3 mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#FF8966]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                         </svg>
                         Informasi Tambahan
                     </h3>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {{-- Pekerjaan --}}
                         <div class="form-control md:col-span-2">
                             <label class="label font-semibold text-slate-600">Pekerjaan</label>
-                            <input type="text" value="Mahasiswa"
+                            <input type="text" name="job" value="{{ old('job', $user->job) }}"
                                 class="input input-bordered w-full rounded-xl focus:outline-[#0D9488] focus:border-[#0D9488]"
                                 placeholder="Contoh: Mahasiswa, Karyawan Swasta" />
                         </div>
 
+                        {{-- Status --}}
                         <div class="form-control">
                             <label class="label font-semibold text-slate-600">Status Perkawinan</label>
-                            <select
-                                class="select select-bordered w-full rounded-xl focus:outline-[#0D9488] focus:border-[#0D9488]">
-                                <option>Lajang</option>
-                                <option>Menikah</option>
-                                <option>Cerai</option>
+                            <select name="marital_status" class="select select-bordered w-full rounded-xl focus:outline-[#0D9488] focus:border-[#0D9488]">
+                                <option value="" disabled selected>Pilih...</option>
+                                <option {{ old('marital_status', $user->marital_status) == 'Lajang' ? 'selected' : '' }}>Lajang</option>
+                                <option {{ old('marital_status', $user->marital_status) == 'Menikah' ? 'selected' : '' }}>Menikah</option>
+                                <option {{ old('marital_status', $user->marital_status) == 'Cerai' ? 'selected' : '' }}>Cerai</option>
                             </select>
                         </div>
 
+                        {{-- Kondisi Tinggal --}}
                         <div class="form-control">
                             <label class="label font-semibold text-slate-600">Kondisi Tinggal</label>
-                            <select
-                                class="select select-bordered w-full rounded-xl focus:outline-[#0D9488] focus:border-[#0D9488]">
-                                <option>Sendiri</option>
-                                <option>Bersama Orang Tua</option>
-                                <option>Bersama Pasangan</option>
-                                <option>Asrama/Kost</option>
+                            <select name="living_condition" class="select select-bordered w-full rounded-xl focus:outline-[#0D9488] focus:border-[#0D9488]">
+                                <option value="" disabled selected>Pilih...</option>
+                                <option {{ old('living_condition', $user->living_condition) == 'Sendiri' ? 'selected' : '' }}>Sendiri</option>
+                                <option {{ old('living_condition', $user->living_condition) == 'Bersama Orang Tua' ? 'selected' : '' }}>Bersama Orang Tua</option>
+                                <option {{ old('living_condition', $user->living_condition) == 'Bersama Pasangan' ? 'selected' : '' }}>Bersama Pasangan</option>
+                                <option {{ old('living_condition', $user->living_condition) == 'Asrama/Kost' ? 'selected' : '' }}>Asrama/Kost</option>
                             </select>
                         </div>
 
+                        {{-- Kota --}}
                         <div class="form-control">
                             <label class="label font-semibold text-slate-600">Kota / Kabupaten</label>
-                            <input type="text" value="Edinburg"
+                            <input type="text" name="city" value="{{ old('city', $user->city) }}"
                                 class="input input-bordered w-full rounded-xl focus:outline-[#0D9488] focus:border-[#0D9488]" />
                         </div>
 
+                        {{-- Pendidikan --}}
                         <div class="form-control">
                             <label class="label font-semibold text-slate-600">Pendidikan Terakhir</label>
-                            <select
-                                class="select select-bordered w-full rounded-xl focus:outline-[#0D9488] focus:border-[#0D9488]">
-                                <option>SMA / SMK</option>
-                                <option>Diploma</option>
-                                <option>Sarjana (S1)</option>
-                                <option selected>Magister (S2)</option>
-                                <option>Doktor (S3)</option>
+                            <select name="education" class="select select-bordered w-full rounded-xl focus:outline-[#0D9488] focus:border-[#0D9488]">
+                                <option value="" disabled selected>Pilih...</option>
+                                <option {{ old('education', $user->education) == 'SMA / SMK' ? 'selected' : '' }}>SMA / SMK</option>
+                                <option {{ old('education', $user->education) == 'Diploma' ? 'selected' : '' }}>Diploma</option>
+                                <option {{ old('education', $user->education) == 'Sarjana (S1)' ? 'selected' : '' }}>Sarjana (S1)</option>
+                                <option {{ old('education', $user->education) == 'Magister (S2)' ? 'selected' : '' }}>Magister (S2)</option>
+                                <option {{ old('education', $user->education) == 'Doktor (S3)' ? 'selected' : '' }}>Doktor (S3)</option>
                             </select>
                         </div>
                     </div>
                 </div>
 
+                {{-- TOMBOL ACTION --}}
                 <div class="pt-6 border-t border-slate-200 flex flex-col-reverse md:flex-row justify-end gap-4">
-                    <a href="/profile"
+                    <a href="{{ route('profile.index') }}"
                         class="btn btn-ghost text-slate-500 hover:bg-slate-100 rounded-full px-8 normal-case w-full md:w-auto">
                         Batal
                     </a>
@@ -206,6 +205,18 @@
             }
             reader.readAsDataURL(input.files[0]);
         }
+    }
+
+    // Logic Button Hapus
+    function markDeletePhoto() {
+        // Set input hidden 'delete_photo' jadi 1
+        document.getElementById('deletePhotoInput').value = '1';
+        // Ganti preview ke default UI Avatar
+        document.getElementById('avatarPreview').src = "https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&background=294C60&color=fff&size=256";
+        // Reset file input biar ga ikut ke-upload kalau user berubah pikiran
+        document.querySelector('input[type="file"]').value = '';
+
+        alert('Foto akan dihapus saat tombol Simpan ditekan.');
     }
 </script>
 @endsection
