@@ -94,7 +94,7 @@
                 </div>
 
                 <div class="flex flex-col md:flex-row gap-3 items-center">
-                    <a href="#"
+                    <a href="{{ route('evaluation.start') }}"
                         class="btn bg-[#FF8966] hover:bg-orange-600 text-white border-none rounded-full px-8 py-3 h-auto text-base shadow-lg hover:shadow-orange-200/50 w-full md:w-auto transition-all transform hover:-translate-y-1">
                         Mulai Sekarang
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24"
