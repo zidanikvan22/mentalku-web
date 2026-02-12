@@ -48,7 +48,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 animate-fade-in-up delay-200">
 
-            @for ($i = 0; $i < 8; $i++)
+            @for ($i = 0; $i < 12; $i++)
                 <a href="#"
                     class="group bg-white rounded-[24px] overflow-hidden shadow-lg border border-slate-100 hover:shadow-2xl hover:border-[#9BCDE6] transition-all duration-300 flex flex-col h-full">
 
@@ -58,7 +58,7 @@
 
                         <div
                             class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-bold text-[#0D9488] shadow-sm">
-                            TIPS
+                            Depresi
                         </div>
                     </div>
 
@@ -71,12 +71,12 @@
                             </svg>
                             <span>20 Juli 2024</span>
                             <span>•</span>
-                            <span>Admin</span>
+                            <span class="line-clamp-1">Anton Sudjiatmoko, Bert oke</span>
                         </div>
 
                         <h3
                             class="text-lg font-bold text-[#294C60] mb-3 leading-snug group-hover:text-[#FF8966] transition-colors line-clamp-2">
-                            Mengapa Self-Care Bukan Sekadar Tren, Tapi Kebutuhan?
+                            Mengapa Self-Care Bukan Sekadar Tren, Tapi Kebutuhan? Mengapa Self-Care Bukan Sekadar Tren, Tapi Kebutuhan?
                         </h3>
 
                         <p class="text-slate-500 text-sm mb-4 line-clamp-3 leading-relaxed flex-grow">
