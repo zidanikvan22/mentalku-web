@@ -13,13 +13,19 @@ return new class extends Migration
     {
         Schema::create('education', function (Blueprint $table) {
             $table->id();
-            $table->string('title');                
-            $table->string('category');            
-            $table->string('author');              
-            $table->string('image_path')->nullable(); 
-            $table->text('excerpt');                
-            $table->string('external_url');         
-            $table->date('published_at');           
+            $table->string('title');
+            // Request 4: Enum Category
+            $table->enum('category', ['Depresi', 'Stress', 'Anxiety', 'Self-Care']);
+            $table->string('author');
+            // Request 3: Image Path Wajib (Hapus nullable)
+            $table->string('image_path'); 
+            $table->text('excerpt');
+            $table->string('external_url');
+            // Request 2: Published At tipe Date, Nullable
+            $table->date('published_at')->nullable(); 
+            // Request 1: Content Type Enum, Nullable
+            $table->enum('content_type', ['Artikel', 'Video', 'Jurnal'])->nullable();
+            
             $table->timestamps();
         });
     }

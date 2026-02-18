@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\EducationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,12 +79,13 @@ Route::middleware(['auth'])->group(function () {
     // });
 
     // 5. Fitur Edukasi (View Only)
-    Route::get('/education', function () {
-        return view('user.education');
-    });
-    Route::get('/education-detail', function () {
-        return view('user.education-detail');
-    });
+    Route::get('/education', [EducationController::class, 'index'])->name('education.index');
+    // Route::get('/education', function () {
+    //     return view('user.education');
+    // });
+    // Route::get('/education-detail', function () {
+    //     return view('user.education-detail');
+    // });
 });
 
 

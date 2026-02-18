@@ -17,6 +17,7 @@ class Education extends Model
         'excerpt',
         'external_url',
         'published_at',
+        'content_type', 
     ];
 
     protected $casts = [
