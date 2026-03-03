@@ -3,15 +3,15 @@
     <div onclick="toggleRegisterModal()" class="absolute inset-0 bg-slate-900/60 backdrop-blur-md transition-opacity">
     </div>
 
-    <div class="relative min-h-screen md:min-h-0 flex items-center justify-center p-2 md:p-4">
+    <div class="relative min-h-screen md:h-screen md:overflow-hidden flex items-center justify-center p-2 md:p-4">
 
         <div
-            class="bg-white w-full max-w-5xl rounded-[30px] shadow-2xl overflow-hidden flex flex-col-reverse md:flex-row relative animate-fade-in-up max-h-[90vh] md:max-h-auto overflow-y-auto md:overflow-visible">
+            class="bg-white w-full max-w-5xl rounded-[30px] shadow-2xl overflow-hidden flex flex-col-reverse md:flex-row relative animate-fade-in-up max-h-[90vh]">
 
             <button onclick="toggleRegisterModal()"
                 class="absolute top-4 right-4 z-50 btn btn-circle btn-sm btn-ghost text-slate-400 hover:text-slate-600 block md:hidden">✕</button>
 
-            <div class="w-full md:w-3/5 p-6 md:p-10 overflow-y-auto">
+            <div class="bg-[#FBF8F0] w-full md:w-3/5 p-6 md:p-10 overflow-y-auto">
                 <div class="text-center md:text-left mb-6">
                     <h2 class="text-2xl md:text-3xl font-extrabold text-[#294C60]">Buat Akun Baru</h2>
                     <p class="text-slate-400 text-sm">Mulai perjalanan kesehatan mentalmu hari ini.</p>
@@ -92,7 +92,7 @@
                 </div>
 
                 <img src="{{ asset('assets/img/illustrations/ilustrasi_v1.png') }}"
-                    class="w-56 mb-6 drop-shadow-xl relative z-10">
+                    class="w-4/5 max-w-sm mb-6 drop-shadow-xl relative z-10">
                 <h3 class="text-2xl font-bold text-[#294C60] relative z-10">Bergabunglah Bersama Kami!</h3>
                 <p class="text-slate-600 mt-2 relative z-10">Langkah pertama menuju pikiran yang lebih tenang.</p>
             </div>
