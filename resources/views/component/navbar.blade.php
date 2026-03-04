@@ -70,7 +70,7 @@
             </button>
 
             <button onclick="toggleRegisterModal()"
-                class="btn btn-primary bg-[#294C60] hover:bg-[#1f3a4a] text-white btn-sm px-6 rounded-full border-none">
+                class="btn btn-primary bg-[#294C60] hover:bg-[#FBF8F0] text-white hover:text-black btn-sm px-6 rounded-full border-none">
                 Daftar
             </button>
             @endguest

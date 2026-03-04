@@ -92,7 +92,7 @@
                 </div>
 
                 <img src="{{ asset('assets/img/illustrations/ilustrasi_v1.png') }}"
-                    class="w-4/5 max-w-sm mb-6 drop-shadow-xl relative z-10">
+                    class="w-5/6 max-w-sm drop-shadow-xl relative z-10">
                 <h3 class="text-2xl font-bold text-[#294C60] relative z-10">Bergabunglah Bersama Kami!</h3>
                 <p class="text-slate-600 mt-2 relative z-10">Langkah pertama menuju pikiran yang lebih tenang.</p>
             </div>

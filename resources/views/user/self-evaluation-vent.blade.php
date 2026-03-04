@@ -51,22 +51,24 @@
                     class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
                 </div>
 
-                <img src="{{ asset('assets/img/illustrations/ilustrasi_v1.png') }}" alt="Writing Illustration"
-                    class="w-40 mb-6 drop-shadow-xl relative z-10 hover:scale-105 transition-transform duration-500">
+                <div class="relative z-10 flex flex-col items-center justify-center -mt-20">
+                    <img src="{{ asset('assets/img/illustrations/ilustrasi_v1.png') }}" alt="Writing Illustration"
+                        class="w-56 drop-shadow-xl hover:scale-105 transition-transform duration-500">
 
-                <div class="relative z-10 max-w-xs">
-                    <h3 class="text-lg font-bold text-[#294C60] mb-2">Ruang Amanmu.</h3>
-                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
-                        Tulisan ini dienkripsi dan hanya untuk matamu sendiri. Tidak ada penghakiman di sini.
-                    </p>
-                    <div
-                        class="inline-flex items-center gap-2 bg-white/60 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm text-[#0D9488] text-[10px] font-bold border border-white/50">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                clip-rule="evenodd" />
-                        </svg>
-                        Privasi Terjamin
+                    <div class="max-w-xs -mt-14">
+                        <h3 class="text-xl font-bold text-[#294C60] mb-1">Ruang Amanmu.</h3>
+                        <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                            Tulisan ini dienkripsi dan hanya untuk matamu sendiri. Tidak ada penghakiman di sini.
+                        </p>
+                        <div
+                            class="inline-flex items-center gap-2 bg-white/60 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm text-[#0D9488] text-[10px] font-bold border border-white/50">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            Privasi Terjamin
+                        </div>
                     </div>
                 </div>
             </div>
@@ -86,7 +88,7 @@
                     <div class="relative flex-grow mb-4 group">
                         {{-- Tambahkan name="vent" dan isi value dari session --}}
                         <textarea name="vent"
-                            class="w-full h-full bg-[#F8FAFC] border border-slate-200 rounded-2xl p-5 text-base text-slate-700 leading-relaxed resize-none focus:outline-none focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] transition-all placeholder:text-slate-300 custom-scrollbar"
+                            class="w-full h-full bg-[#F8FAFC] border border-slate-200 rounded-2xl p-5 text-sm md:text-base text-slate-700 leading-relaxed resize-none focus:outline-none focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] transition-all placeholder:text-slate-300 custom-scrollbar"
                             placeholder="Mulai menulis di sini...&#10;Contoh: 'Hari ini rasanya berat sekali karena...'">{{ $existingVent }}</textarea>
                     </div>
 
@@ -104,7 +106,7 @@
 
                         {{-- Tombol SIMPAN / SELESAI --}}
                         <button type="submit"
-                            class="btn bg-[#FF8966] hover:bg-orange-600 text-white border-none rounded-full px-8 h-10 min-h-[2.5rem] text-sm shadow-md hover:shadow-lg flex items-center gap-2 transition-all">
+                            class="btn bg-[#FF8966] hover:bg-orange-600 text-white border-none rounded-full px-4 md:px-8 h-10 min-h-[2.5rem] text-xs md:text-sm shadow-md hover:shadow-lg flex items-center gap-1 md:gap-2 transition-all">
                             <span>Selesai & Lihat Hasil</span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />

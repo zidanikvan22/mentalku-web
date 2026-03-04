@@ -50,8 +50,8 @@ $questions = [
 $startNum = ($page - 1) * 7 + 1;
 $endNum = $startNum + 6;
 
-// 4. Progress Bar (33%, 66%, 100%)
-$progress = ($page / 3) * 100;
+// 4. Progress Bar (25%, 50%, 75%)
+$progress = ($page / 4) * 100;
 @endphp
 
 <section class="min-h-screen pt-20 pb-4 flex flex-col justify-center items-center bg-[#F8FAFC] px-4">
@@ -71,7 +71,7 @@ $progress = ($page / 3) * 100;
                     </div>
                     <div class="text-right">
                         <span class="text-2xl font-extrabold text-[#0D9488]">{{ $page }}</span>
-                        <span class="text-sm text-slate-400 font-medium">/ 3 Bagian</span>
+                        <span class="text-sm text-slate-400 font-medium">/ 4 Bagian</span>
                     </div>
                 </div>
 
