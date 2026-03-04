@@ -38,11 +38,7 @@
                 <form action="{{ route('login.process') }}" method="POST" class="space-y-4">
                     @csrf
 
-                    @if(session('error'))
-                    <div class="alert alert-error text-white text-sm py-2">
-                        {{ session('error') }}
-                    </div>
-                    @endif
+                    {{-- Menghapus session flash error lama, diganti dengan SweetAlert di bawah --}}
 
                     <div class="form-control w-full">
                         <label class="label mb-1">
@@ -86,3 +82,62 @@
         </div>
     </div>
 </div>
+
+{{-- SweetAlert Logic --}}
+@if (session('is_login'))
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let errorHtml = "";
+        
+        @if($errors->any())
+            errorHtml += "<ul class='text-left ml-4 list-disc text-sm text-red-500'>";
+            @foreach($errors->all() as $error)
+                errorHtml += "<li>{{ $error }}</li>";
+            @endforeach
+            errorHtml += "</ul>";
+        @elseif(session('login_error'))
+            errorHtml = "<p class='text-sm text-red-500 font-medium'>{{ session('login_error') }}</p>";
+        @endif
+
+        Swal.fire({
+            icon: 'error',
+            title: 'Masuk Gagal',
+            html: errorHtml,
+            confirmButtonColor: '#0D9488'
+        }).then(() => {
+            // Membuka modal kembali agar user tidak kebingungan
+            document.getElementById('loginModal').classList.remove('hidden');
+        });
+    });
+</script>
+@endif
+
+@if (session('login_success'))
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil Masuk!',
+            text: "{{ session('login_success') }}",
+            confirmButtonColor: '#0D9488',
+            timer: 2000,
+            showConfirmButton: false
+        });
+    });
+</script>
+@endif
+
+@if (session('logout_success'))
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil Keluar',
+            text: "{{ session('logout_success') }}",
+            confirmButtonColor: '#0D9488',
+            timer: 2000,
+            showConfirmButton: false
+        });
+    });
+</script>
+@endif

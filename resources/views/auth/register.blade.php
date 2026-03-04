@@ -60,16 +60,6 @@
                     </div>
 
                     <div class="md:col-span-2 mt-4">
-                        @if ($errors->any())
-                        <div class="alert alert-error mb-4">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                <li class="text-white text-xs">{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        @endif
-
                         <button type="submit" class="btn w-full bg-[#FF8966] hover:bg-orange-600 text-white border-none rounded-full shadow-lg text-lg">
                             Daftar Sekarang
                         </button>
@@ -100,3 +90,43 @@
         </div>
     </div>
 </div>
+
+{{-- SweetAlert Logic --}}
+@if (session('is_register') && $errors->any())
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let errorMessages = @json($errors->all());
+        let htmlErrors = "<ul class='text-left ml-4 list-disc text-sm text-red-500'>";
+        errorMessages.forEach(msg => {
+            htmlErrors += "<li>" + msg + "</li>";
+        });
+        htmlErrors += "</ul>";
+
+        Swal.fire({
+            icon: 'error',
+            title: 'Pendaftaran Gagal',
+            html: htmlErrors,
+            confirmButtonColor: '#0D9488'
+        }).then(() => {
+            // Membuka modal kembali agar user tidak kebingungan
+            document.getElementById('registerModal').classList.remove('hidden');
+        });
+    });
+</script>
+@endif
+
+@if (session('register_success'))
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: "{{ session('register_success') }}",
+            confirmButtonColor: '#0D9488'
+        }).then(() => {
+            // Langsung membuka modal login agar user bisa langsung mendaftar
+            document.getElementById('loginModal').classList.remove('hidden');
+        });
+    });
+</script>
+@endif
