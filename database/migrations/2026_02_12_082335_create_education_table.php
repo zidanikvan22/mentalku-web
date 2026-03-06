@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             // Request 4: Enum Category
             $table->enum('category', ['Depresi', 'Stress', 'Anxiety', 'Self-Care']);
+            // $table->enum('category', ['Depresi', 'Stres', 'Kecemasan', 'Rawat Diri']);
             $table->string('author');
             // Request 3: Image Path Wajib (Hapus nullable)
             $table->string('image_path'); 

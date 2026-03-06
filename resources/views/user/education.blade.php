@@ -20,6 +20,7 @@
     <div class="flex flex-wrap justify-center gap-3 mb-12 animate-fade-in-up delay-100 overflow-x-auto pb-4 md:pb-0 px-4 md:px-0">
         @php
         $categories = ['Semua', 'Depresi', 'Stres', 'Kecemasan', 'Self Care'];
+        // $categories = ['Semua', 'Depresi', 'Stres', 'Kecemasan', 'Rawat Diri'];
         @endphp
 
         @foreach($categories as $cat)
