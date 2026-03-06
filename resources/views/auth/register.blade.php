@@ -21,17 +21,17 @@
                     @csrf
 
                     <div class="form-control md:col-span-2">
-                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60]">Nama Lengkap</span></label>
-                        <input type="text" name="name" value="{{ old('name') }}" placeholder="John Doe" class="input input-bordered w-full focus:outline-[#0D9488]" required />
+                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60] text-xs md:text-sm">Nama Lengkap</span></label>
+                        <input type="text" name="name" value="{{ old('name') }}" placeholder="xxxxxxxxxxxxxxx" class="input input-bordered w-full focus:outline-[#0D9488]" required />
                     </div>
 
                     <div class="form-control">
-                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60]">Username</span></label>
-                        <input type="text" name="username" value="{{ old('username') }}" placeholder="johndoe123" class="input input-bordered w-full focus:outline-[#0D9488]" required />
+                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60] text-xs md:text-sm">Nama Panggilan</span></label>
+                        <input type="text" name="username" value="{{ old('username') }}" placeholder="xxxxxxxx" class="input input-bordered w-full focus:outline-[#0D9488]" required />
                     </div>
 
                     <div class="form-control">
-                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60]">Jenis Kelamin</span></label>
+                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60] text-xs md:text-sm">Jenis Kelamin</span></label>
                         <select name="gender" class="select select-bordered w-full focus:outline-[#0D9488]" required>
                             <option disabled selected>Pilih...</option>
                             <option value="Laki-laki">Laki-laki</option>
@@ -40,22 +40,22 @@
                     </div>
 
                     <div class="form-control md:col-span-2">
-                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60]">Tanggal Lahir</span></label>
+                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60] text-xs md:text-sm">Tanggal Lahir</span></label>
                         <input type="date" name="birth_date" value="{{ old('birth_date') }}" class="input input-bordered w-full focus:outline-[#0D9488]" required />
                     </div>
 
                     <div class="form-control md:col-span-2">
-                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60]">Email</span></label>
-                        <input type="email" name="email" value="{{ old('email') }}" placeholder="email@contoh.com" class="input input-bordered w-full focus:outline-[#0D9488]" required />
+                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60] text-xs md:text-sm">Email</span></label>
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="contoh@gmail.com" class="input input-bordered w-full focus:outline-[#0D9488]" required />
                     </div>
 
                     <div class="form-control">
-                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60]">Kata Sandi</span></label>
+                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60] text-xs md:text-sm">Kata Sandi</span></label>
                         <input type="password" name="password" placeholder="••••••••" class="input input-bordered w-full focus:outline-[#0D9488]" required />
                     </div>
 
                     <div class="form-control">
-                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60]">Konfirmasi Sandi</span></label>
+                        <label class="label py-1"><span class="label-text font-semibold text-[#294C60] text-xs md:text-sm">Konfirmasi Kata Sandi</span></label>
                         <input type="password" name="password_confirmation" placeholder="••••••••" class="input input-bordered w-full focus:outline-[#0D9488]" required />
                     </div>
 
@@ -82,8 +82,8 @@
                 </div>
 
                 <img src="{{ asset('assets/img/illustrations/ilustrasi_v1.png') }}"
-                    class="w-5/6 max-w-sm drop-shadow-xl relative z-10">
-                <h3 class="text-2xl font-bold text-[#294C60] relative z-10">Bergabunglah Bersama Kami!</h3>
+                    class="w-6/7 max-w-sm drop-shadow-xl relative z-10">
+                <h3 class="text-2xl font-bold text-[#294C60] relative z-10 -mt-16">Bergabunglah Bersama Kami!</h3>
                 <p class="text-slate-600 mt-2 relative z-10">Langkah pertama menuju pikiran yang lebih tenang.</p>
             </div>
 
@@ -106,7 +106,16 @@
             icon: 'error',
             title: 'Pendaftaran Gagal',
             html: htmlErrors,
-            confirmButtonColor: '#0D9488'
+            background: '#FFFFFF',
+            color: '#294C60',
+            iconColor: '#F43F5E',
+            customClass: {
+                popup: 'rounded-[30px] shadow-xl border border-slate-100',
+                title: 'text-2xl font-extrabold text-[#294C60] mb-2',
+                htmlContainer: 'text-slate-500 font-medium',
+                confirmButton: 'btn bg-[#0D9488] hover:bg-teal-700 text-white border-none rounded-full px-8'
+            },
+            buttonsStyling: false
         }).then(() => {
             // Membuka modal kembali agar user tidak kebingungan
             document.getElementById('registerModal').classList.remove('hidden');
@@ -122,7 +131,16 @@
             icon: 'success',
             title: 'Berhasil!',
             text: "{{ session('register_success') }}",
-            confirmButtonColor: '#0D9488'
+            background: '#FFFFFF',
+            color: '#294C60',
+            iconColor: '#0D9488',
+            customClass: {
+                popup: 'rounded-[30px] shadow-xl border border-slate-100',
+                title: 'text-2xl font-extrabold text-[#294C60] mb-2',
+                htmlContainer: 'text-slate-500 font-medium',
+                confirmButton: 'btn bg-[#0D9488] hover:bg-teal-700 text-white border-none rounded-full px-8'
+            },
+            buttonsStyling: false
         }).then(() => {
             // Langsung membuka modal login agar user bisa langsung mendaftar
             document.getElementById('loginModal').classList.remove('hidden');

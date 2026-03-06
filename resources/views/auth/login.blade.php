@@ -42,14 +42,14 @@
 
                     <div class="form-control w-full">
                         <label class="label mb-1">
-                            <span class="label-text font-semibold text-[#294C60] text-xs md:text-sm">Email Address</span>
+                            <span class="label-text font-semibold text-[#294C60] text-xs md:text-sm">Email</span>
                         </label>
                         <label class="input input-bordered flex items-center gap-2 focus-within:outline-[#0D9488] w-full">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 opacity-70">
                                 <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
                                 <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
                             </svg>
-                            <input type="email" name="email" class="grow" placeholder="nama@email.com" required />
+                            <input type="email" name="email" class="grow" placeholder="nama@gmail.com" required />
                         </label>
                     </div>
 
@@ -103,7 +103,16 @@
             icon: 'error',
             title: 'Masuk Gagal',
             html: errorHtml,
-            confirmButtonColor: '#0D9488'
+            background: '#FFFFFF',
+            color: '#294C60',
+            iconColor: '#F43F5E',
+            customClass: {
+                popup: 'rounded-[30px] shadow-xl border border-slate-100',
+                title: 'text-2xl font-extrabold text-[#294C60] mb-2',
+                htmlContainer: 'text-slate-500 font-medium',
+                confirmButton: 'btn bg-[#0D9488] hover:bg-teal-700 text-white border-none rounded-full px-8'
+            },
+            buttonsStyling: false
         }).then(() => {
             // Membuka modal kembali agar user tidak kebingungan
             document.getElementById('loginModal').classList.remove('hidden');
@@ -119,9 +128,16 @@
             icon: 'success',
             title: 'Berhasil Masuk!',
             text: "{{ session('login_success') }}",
-            confirmButtonColor: '#0D9488',
-            timer: 2000,
-            showConfirmButton: false
+            showConfirmButton: false,
+            timer: 2500,
+            background: '#FFFFFF',
+            color: '#294C60',
+            iconColor: '#0D9488',
+            customClass: {
+                popup: 'rounded-[30px] shadow-xl border border-slate-100',
+                title: 'text-2xl font-extrabold text-[#294C60] mb-2',
+                htmlContainer: 'text-slate-500 font-medium'
+            }
         });
     });
 </script>
@@ -134,9 +150,16 @@
             icon: 'success',
             title: 'Berhasil Keluar',
             text: "{{ session('logout_success') }}",
-            confirmButtonColor: '#0D9488',
-            timer: 2000,
-            showConfirmButton: false
+            showConfirmButton: false,
+            timer: 2500,
+            background: '#FFFFFF',
+            color: '#294C60',
+            iconColor: '#0D9488',
+            customClass: {
+                popup: 'rounded-[30px] shadow-xl border border-slate-100',
+                title: 'text-2xl font-extrabold text-[#294C60] mb-2',
+                htmlContainer: 'text-slate-500 font-medium'
+            }
         });
     });
 </script>

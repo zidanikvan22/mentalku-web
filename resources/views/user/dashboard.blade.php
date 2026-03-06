@@ -149,7 +149,7 @@
                         [
                             'icon' => '💡',
                             'title' => 'Inovasi Kesehatan Digital',
-                            'desc' => 'Mendorong inovasi kesehatan dengan AI, untuk masyarakat yang lebih sehat',
+                            'desc' => 'Mendorong inovasi kesehatan dengan Artificial Intelligence, untuk masyarakat yang lebih sehat',
                         ],
                         [
                             'icon' => '📈',

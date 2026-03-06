@@ -7,14 +7,27 @@
 
 <section class="container mx-auto px-4 md:px-10 mb-20">
 
-    {{-- Flash Message Success --}}
+    {{-- Flash Message Success (SweetAlert) --}}
     @if(session('success'))
-    <div role="alert" class="alert alert-success mb-6 text-white max-w-5xl mx-auto">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <span>{{ session('success') }}</span>
-    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Mantap!',
+                text: "{{ session('success') }}",
+                showConfirmButton: false,
+                timer: 2500,
+                background: '#FFFFFF',
+                color: '#294C60',
+                iconColor: '#0D9488',
+                customClass: {
+                    popup: 'rounded-[30px] shadow-xl border border-slate-100',
+                    title: 'text-2xl font-extrabold text-[#294C60] mb-2',
+                    htmlContainer: 'text-slate-500 font-medium'
+                }
+            });
+        });
+    </script>
     @endif
 
     <div class="max-w-5xl mx-auto bg-[#E0F2FE] rounded-[40px] shadow-xl overflow-hidden mb-16 animate-fade-in-up">
@@ -243,7 +256,7 @@
                 </div>
             </div>
 
-            <div class="mt-8 pt-6 border-t border-slate-300/50 text-center">
+            <div class="mt-8 pt-6 border-t border-slate-300/50 text-center md:text-left">
                 <p class="text-sm text-slate-500">
                     * Informasi Anda tetap <span class="font-bold text-[#294C60]">pribadi dan aman</span>. Untuk
                     rincian
