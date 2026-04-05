@@ -3,247 +3,309 @@
 @section('title', 'Hasil Evaluasi - MentalKU')
 
 @section('content')
-{{-- CSS untuk Animasi Circle Chart --}}
-<style>
-    @keyframes progressAnimation {
-        from {
-            stroke-dashoffset: 352;
+    {{-- CSS untuk Animasi Circle Chart --}}
+    <style>
+        @keyframes progressAnimation {
+            from {
+                stroke-dashoffset: 352;
+            }
+
+            to {
+                stroke-dashoffset: var(--target-offset);
+            }
         }
 
-        to {
-            stroke-dashoffset: var(--target-offset);
+        .animate-progress {
+            animation: progressAnimation 1.5s ease-out forwards;
         }
-    }
+    </style>
 
-    .animate-progress {
-        animation: progressAnimation 1.5s ease-out forwards;
-    }
-</style>
+    <div class="pt-20 lg:pt-28"></div>
 
-<div class="pt-20 lg:pt-28"></div>
+    <section class="container mx-auto px-4 md:px-8 mb-16">
 
-<section class="container mx-auto px-4 md:px-8 mb-16">
+        {{-- HEADLINE --}}
+        <div class="text-center max-w-3xl mx-auto mb-8 animate-fade-in-up">
+            <h1 class="text-2xl md:text-3xl font-extrabold text-[#294C60] mb-2">
+                Hasil Skrining Kesehatan Mental
+            </h1>
+            <p class="text-slate-500 text-base leading-relaxed">
+                Gambaran kondisi Anda berdasarkan DASS-21.
+                <span class="font-bold text-[#FF8966]">Bukan diagnosis medis final.</span>
+            </p>
+        </div>
 
-    {{-- HEADLINE --}}
-    <div class="text-center max-w-3xl mx-auto mb-8 animate-fade-in-up">
-        <h1 class="text-2xl md:text-3xl font-extrabold text-[#294C60] mb-2">
-            Hasil Skrining Kesehatan Mental
-        </h1>
-        <p class="text-slate-500 text-base leading-relaxed">
-            Gambaran kondisi Anda berdasarkan DASS-21.
-            <span class="font-bold text-[#FF8966]">Bukan diagnosis medis final.</span>
-        </p>
-    </div>
+        {{-- SCORE CARDS GRID (Dynamic Data) --}}
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8 animate-fade-in-up delay-100 max-w-5xl mx-auto">
 
-    {{-- SCORE CARDS GRID (Compact & Responsive) --}}
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8 animate-fade-in-up delay-100 max-w-5xl mx-auto">
-
-        <div class="bg-white rounded-2xl p-5 shadow-lg border-t-4 border-[#294C60] flex flex-col items-center hover:-translate-y-1 transition-transform duration-300">
-            <div class="flex items-center gap-3 mb-4 w-full justify-center border-b border-slate-100 pb-3">
-                <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[#294C60]">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
-                    </svg>
+            {{-- CARD 1: DEPRESI --}}
+            <div
+                class="bg-white rounded-2xl p-5 shadow-lg border-t-4 border-[#294C60] flex flex-col items-center hover:-translate-y-1 transition-transform duration-300">
+                <div class="flex items-center gap-3 mb-4 w-full justify-center border-b border-slate-100 pb-3">
+                    <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[#294C60]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-700">Depresi</h3>
                 </div>
-                <h3 class="text-lg font-bold text-slate-700">Depresi</h3>
+
+                <div class="relative w-24 h-24 flex items-center justify-center mb-2">
+                    <svg class="w-full h-full transform -rotate-90">
+                        <circle cx="48" cy="48" r="40" stroke="currentColor" stroke-width="6"
+                            fill="transparent" class="text-slate-100" />
+                        <circle cx="48" cy="48" r="40" stroke="currentColor" stroke-width="6"
+                            fill="transparent" stroke-dasharray="251" stroke-dashoffset="251"
+                            style="--target-offset: {{ max(0, 251 - ($result->depression_score / 42) * 251) }};"
+                            class="text-[#294C60] animate-progress" />
+                    </svg>
+                    <div class="absolute text-center">
+                        <span class="text-2xl font-extrabold text-[#294C60]">{{ $result->depression_score }}</span>
+                    </div>
+                </div>
+                <span
+                    class="px-3 py-1 rounded-full bg-slate-100 text-[#294C60] text-xs font-bold">{{ $result->depression_level }}</span>
             </div>
 
-            <div class="relative w-24 h-24 flex items-center justify-center mb-2">
-                <svg class="w-full h-full transform -rotate-90">
-                    <circle cx="48" cy="48" r="40" stroke="currentColor" stroke-width="6" fill="transparent" class="text-slate-100" />
-                    <circle cx="48" cy="48" r="40" stroke="currentColor" stroke-width="6" fill="transparent" stroke-dasharray="251" stroke-dashoffset="251"
-                        style="--target-offset: 50;"
-                        class="text-[#294C60] animate-progress" />
+            {{-- CARD 2: STRES --}}
+            <div
+                class="bg-white rounded-2xl p-5 shadow-xl border-t-4 border-[#FF8966] flex flex-col items-center relative z-10 transform md:-translate-y-2">
+                <div class="flex items-center gap-3 mb-4 w-full justify-center border-b border-orange-50 pb-3">
+                    <div class="w-8 h-8 rounded-full bg-orange-50 flex items-center justify-center text-[#FF8966]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-700">Stres</h3>
+                </div>
+
+                <div class="relative w-28 h-28 flex items-center justify-center mb-2">
+                    <svg class="w-full h-full transform -rotate-90">
+                        <circle cx="56" cy="56" r="46" stroke="currentColor" stroke-width="7"
+                            fill="transparent" class="text-orange-50" />
+                        <circle cx="56" cy="56" r="46" stroke="currentColor" stroke-width="7"
+                            fill="transparent" stroke-dasharray="289" stroke-dashoffset="289"
+                            style="--target-offset: {{ max(0, 289 - ($result->stress_score / 42) * 289) }};"
+                            class="text-[#FF8966] animate-progress" />
+                    </svg>
+                    <div class="absolute text-center">
+                        <span class="text-3xl font-extrabold text-[#FF8966]">{{ $result->stress_score }}</span>
+                    </div>
+                </div>
+                <span
+                    class="px-3 py-1 rounded-full bg-[#FF8966] text-white text-xs font-bold shadow-md shadow-orange-200">{{ $result->stress_level }}</span>
+            </div>
+
+            {{-- CARD 3: KECEMASAN --}}
+            <div
+                class="bg-white rounded-2xl p-5 shadow-lg border-t-4 border-[#0D9488] flex flex-col items-center hover:-translate-y-1 transition-transform duration-300">
+                <div class="flex items-center gap-3 mb-4 w-full justify-center border-b border-teal-50 pb-3">
+                    <div class="w-8 h-8 rounded-full bg-teal-50 flex items-center justify-center text-[#0D9488]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-700">Kecemasan</h3>
+                </div>
+
+                <div class="relative w-24 h-24 flex items-center justify-center mb-2">
+                    <svg class="w-full h-full transform -rotate-90">
+                        <circle cx="48" cy="48" r="40" stroke="currentColor" stroke-width="6"
+                            fill="transparent" class="text-teal-50" />
+                        <circle cx="48" cy="48" r="40" stroke="currentColor" stroke-width="6"
+                            fill="transparent" stroke-dasharray="251" stroke-dashoffset="251"
+                            style="--target-offset: {{ max(0, 251 - ($result->anxiety_score / 42) * 251) }};"
+                            class="text-[#0D9488] animate-progress" />
+                    </svg>
+                    <div class="absolute text-center">
+                        <span class="text-2xl font-extrabold text-[#0D9488]">{{ $result->anxiety_score }}</span>
+                    </div>
+                </div>
+                <span
+                    class="px-3 py-1 rounded-full bg-teal-50 text-[#0D9488] text-xs font-bold">{{ $result->anxiety_level }}</span>
+            </div>
+
+        </div>
+
+        {{-- GEMINI AI SECTION (Horizontal Compact) --}}
+        <div
+            class="bg-gradient-to-r from-[#E0F2FE] to-white border border-[#BAE6FD] rounded-2xl p-6 mb-10 shadow-md relative overflow-hidden animate-fade-in-up delay-200 max-w-5xl mx-auto">
+            <div class="absolute -right-10 -top-10 opacity-10 pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-40 w-40 text-[#294C60]" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
-                <div class="absolute text-center">
-                    <span class="text-2xl font-extrabold text-[#294C60]">10</span>
+            </div>
+
+            <div class="relative z-10 flex flex-col md:flex-row items-start gap-6">
+                {{-- Left: Header/Icon --}}
+                <div
+                    class="flex md:flex-col items-center md:items-start gap-3 md:w-1/4 shrink-0 border-b md:border-b-0 md:border-r border-blue-200/50 pb-4 md:pb-0 md:pr-4">
+                    <div class="w-12 h-12 rounded-full bg-[#294C60] flex items-center justify-center text-white shadow-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-[#294C60] leading-tight">Rekomendasi Personalisasi</h2>
+                        <span
+                            class="text-xs font-medium text-[#0D9488] bg-white/50 px-2 py-0.5 rounded-full mt-1 inline-block">Powered
+                            by Gemini AI</span>
+                    </div>
+                </div>
+
+                {{-- Right: Content --}}
+                <div class="md:w-3/4">
+                    <div
+                        class="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-white/50 text-slate-700 leading-relaxed font-medium text-sm md:text-base shadow-sm">
+                        <p class="whitespace-pre-line">
+                            {!! nl2br(e($result->gemini_recommendation)) !!}
+                        </p>
+                    </div>
                 </div>
             </div>
-            <span class="px-3 py-1 rounded-full bg-slate-100 text-[#294C60] text-xs font-bold">Ringan</span>
         </div>
 
-        <div class="bg-white rounded-2xl p-5 shadow-xl border-t-4 border-[#FF8966] flex flex-col items-center relative z-10 transform md:-translate-y-2">
-            <div class="flex items-center gap-3 mb-4 w-full justify-center border-b border-orange-50 pb-3">
-                <div class="w-8 h-8 rounded-full bg-orange-50 flex items-center justify-center text-[#FF8966]">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                </div>
-                <h3 class="text-lg font-bold text-slate-700">Stres</h3>
-            </div>
-
-            <div class="relative w-28 h-28 flex items-center justify-center mb-2">
-                <svg class="w-full h-full transform -rotate-90">
-                    <circle cx="56" cy="56" r="46" stroke="currentColor" stroke-width="7" fill="transparent" class="text-orange-50" />
-                    <circle cx="56" cy="56" r="46" stroke="currentColor" stroke-width="7" fill="transparent" stroke-dasharray="289" stroke-dashoffset="289"
-                        style="--target-offset: 60;"
-                        class="text-[#FF8966] animate-progress" />
+        {{-- ACTION BUTTONS & DISCLAIMER --}}
+        <div class="flex flex-col items-center gap-6 mb-12 animate-fade-in-up delay-300 max-w-4xl mx-auto">
+            <div
+                class="bg-red-50 border border-red-100 px-4 py-3 rounded-lg text-red-500 text-xs md:text-sm flex items-start gap-2 w-full justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0 mt-0.5" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                        clip-rule="evenodd" />
                 </svg>
-                <div class="absolute text-center">
-                    <span class="text-3xl font-extrabold text-[#FF8966]">80</span>
-                </div>
-            </div>
-            <span class="px-3 py-1 rounded-full bg-[#FF8966] text-white text-xs font-bold shadow-md shadow-orange-200">Sedang</span>
-        </div>
-
-        <div class="bg-white rounded-2xl p-5 shadow-lg border-t-4 border-[#0D9488] flex flex-col items-center hover:-translate-y-1 transition-transform duration-300">
-            <div class="flex items-center gap-3 mb-4 w-full justify-center border-b border-teal-50 pb-3">
-                <div class="w-8 h-8 rounded-full bg-teal-50 flex items-center justify-center text-[#0D9488]">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                </div>
-                <h3 class="text-lg font-bold text-slate-700">Kecemasan</h3>
+                <p><strong>Catatan Penting:</strong> Hasil ini tidak menggantikan diagnosis profesional. Jika butuh bantuan
+                    segera, hubungi profesional.</p>
             </div>
 
-            <div class="relative w-24 h-24 flex items-center justify-center mb-2">
-                <svg class="w-full h-full transform -rotate-90">
-                    <circle cx="48" cy="48" r="40" stroke="currentColor" stroke-width="6" fill="transparent" class="text-teal-50" />
-                    <circle cx="48" cy="48" r="40" stroke="currentColor" stroke-width="6" fill="transparent" stroke-dasharray="251" stroke-dashoffset="251"
-                        style="--target-offset: 50;"
-                        class="text-[#0D9488] animate-progress" />
-                </svg>
-                <div class="absolute text-center">
-                    <span class="text-2xl font-extrabold text-[#0D9488]">80</span>
-                </div>
-            </div>
-            <span class="px-3 py-1 rounded-full bg-teal-50 text-[#0D9488] text-xs font-bold">Ringan</span>
-        </div>
-
-    </div>
-
-    {{-- GEMINI AI SECTION (Horizontal Compact) --}}
-    <div class="bg-gradient-to-r from-[#E0F2FE] to-white border border-[#BAE6FD] rounded-2xl p-6 mb-10 shadow-md relative overflow-hidden animate-fade-in-up delay-200 max-w-5xl mx-auto">
-        <div class="absolute -right-10 -top-10 opacity-10 pointer-events-none">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-40 w-40 text-[#294C60]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-        </div>
-
-        <div class="relative z-10 flex flex-col md:flex-row items-start gap-6">
-            {{-- Left: Header/Icon --}}
-            <div class="flex md:flex-col items-center md:items-start gap-3 md:w-1/4 shrink-0 border-b md:border-b-0 md:border-r border-blue-200/50 pb-4 md:pb-0 md:pr-4">
-                <div class="w-12 h-12 rounded-full bg-[#294C60] flex items-center justify-center text-white shadow-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                    </svg>
-                </div>
-                <div>
-                    <h2 class="text-lg font-bold text-[#294C60] leading-tight">Rekomendasi Personalisasi</h2>
-                    <span class="text-xs font-medium text-[#0D9488] bg-white/50 px-2 py-0.5 rounded-full mt-1 inline-block">Powered by Gemini AI</span>
-                </div>
-            </div>
-
-            {{-- Right: Content --}}
-            <div class="md:w-3/4">
-                <div class="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-white/50 text-slate-700 leading-relaxed font-medium text-sm md:text-base shadow-sm">
-                    <p>
-                        "Halo! Berdasarkan hasil skrining, sepertinya kamu sedang mengalami tingkat stres menengah. Ini wajar terjadi saat beban akademik atau pekerjaan menumpuk. Coba teknik pernapasan 4-7-8 untuk meredakan ketegangan, dan jangan ragu untuk istirahat sejenak dari layar gadget. Ingat, kesehatanmu adalah prioritas utama."
-                    </p>
-                </div>
+            <div class="flex flex-col sm:flex-row gap-3 w-full justify-center">
+                <a href="/question"
+                    class="btn btn-outline border-slate-300 text-slate-500 hover:bg-slate-50 hover:border-slate-400 rounded-full px-8 min-h-[2.5rem] h-10 text-sm font-bold">
+                    Tes Ulang
+                </a>
+                <a href="/"
+                    class="btn bg-[#FF8966] hover:bg-orange-600 text-white border-none rounded-full px-8 shadow-md hover:shadow-orange-200/50 min-h-[2.5rem] h-10 text-sm">
+                    Kembali ke Dashboard
+                </a>
             </div>
         </div>
-    </div>
 
-    {{-- ACTION BUTTONS & DISCLAIMER --}}
-    <div class="flex flex-col items-center gap-6 mb-12 animate-fade-in-up delay-300 max-w-4xl mx-auto">
-        <div class="bg-red-50 border border-red-100 px-4 py-3 rounded-lg text-red-500 text-xs md:text-sm flex items-start gap-2 w-full justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-            </svg>
-            <p><strong>Catatan Penting:</strong> Hasil ini tidak menggantikan diagnosis profesional. Jika butuh bantuan segera, hubungi profesional.</p>
-        </div>
-
-        <div class="flex flex-col sm:flex-row gap-3 w-full justify-center">
-            <a href="/question" class="btn btn-outline border-slate-300 text-slate-500 hover:bg-slate-50 hover:border-slate-400 rounded-full px-8 min-h-[2.5rem] h-10 text-sm font-bold">
-                Tes Ulang
-            </a>
-            <a href="/" class="btn bg-[#FF8966] hover:bg-orange-600 text-white border-none rounded-full px-8 shadow-md hover:shadow-orange-200/50 min-h-[2.5rem] h-10 text-sm">
-                Kembali ke Dashboard
-            </a>
-        </div>
-    </div>
-
-    {{-- BACAAN TERKAIT (4 COLUMNS GRID) --}}
-    <div class="mb-10 animate-fade-in-up delay-500">
-        <div class="flex items-center gap-4 mb-6">
-            <div class="h-px bg-slate-200 flex-grow"></div>
-            <h3 class="text-xl font-bold text-[#294C60]">Bacaan Terkait</h3>
-            <div class="h-px bg-slate-200 flex-grow"></div>
-        </div>
-
-        {{-- Grid Changed to 4 columns on large screens --}}
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-
-            <div class="group bg-white rounded-2xl overflow-hidden shadow-md border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-                <div class="h-32 bg-[#CFE8F3] relative overflow-hidden shrink-0">
-                    <img src="{{ asset('assets/img/illustrations/ilustrasi_v1.png') }}" class="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-500" alt="Article">
-                </div>
-                <div class="p-4 flex flex-col flex-grow">
-                    <span class="text-[10px] font-bold text-[#0D9488] uppercase tracking-wider mb-1 block">Tips</span>
-                    <h4 class="text-base font-bold text-[#294C60] mb-2 leading-tight group-hover:text-[#FF8966] transition-colors">
-                        Cara Mengatasi Burnout Akademik
-                    </h4>
-                    <p class="text-slate-500 text-xs mb-4 line-clamp-2">
-                        Merasa lelah terus-menerus karena tugas kuliah? Simak strategi efektif untuk bangkit kembali.
-                    </p>
-                    <a href="#" class="text-[#FF8966] font-bold text-xs hover:underline mt-auto">Baca Selengkapnya &rarr;</a>
-                </div>
+        {{-- BACAAN TERKAIT (4 COLUMNS GRID) --}}
+        <div class="mb-10 animate-fade-in-up delay-500">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="h-px bg-slate-200 flex-grow"></div>
+                <h3 class="text-xl font-bold text-[#294C60]">Bacaan Terkait</h3>
+                <div class="h-px bg-slate-200 flex-grow"></div>
             </div>
 
-            <div class="group bg-white rounded-2xl overflow-hidden shadow-md border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-                <div class="h-32 bg-[#F0FDF4] relative overflow-hidden shrink-0">
-                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-50"></div>
-                    <div class="w-full h-full flex items-center justify-center text-[#0D9488] text-2xl font-bold">MentalKU</div>
-                </div>
-                <div class="p-4 flex flex-col flex-grow">
-                    <span class="text-[10px] font-bold text-[#0D9488] uppercase tracking-wider mb-1 block">Edukasi</span>
-                    <h4 class="text-base font-bold text-[#294C60] mb-2 leading-tight group-hover:text-[#FF8966] transition-colors">
-                        Mengenal Gejala Awal Depresi
-                    </h4>
-                    <p class="text-slate-500 text-xs mb-4 line-clamp-2">
-                        Merasa lelah terus-menerus karena tugas kuliah? Simak strategi efektif untuk bangkit kembali.
-                    </p>
-                    <a href="#" class="text-[#FF8966] font-bold text-xs hover:underline mt-auto">Baca Selengkapnya &rarr;</a>
-                </div>
-            </div>
+            {{-- Grid Changed to 4 columns on large screens --}}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
 
-            <div class="group bg-white rounded-2xl overflow-hidden shadow-md border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-                <div class="h-32 bg-[#FFF7ED] relative overflow-hidden shrink-0">
-                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-50"></div>
-                    <div class="w-full h-full flex items-center justify-center text-[#FF8966] text-2xl font-bold">Tips</div>
+                <div
+                    class="group bg-white rounded-2xl overflow-hidden shadow-md border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+                    <div class="h-32 bg-[#CFE8F3] relative overflow-hidden shrink-0">
+                        <img src="{{ asset('assets/img/illustrations/ilustrasi_v1.png') }}"
+                            class="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-500"
+                            alt="Article">
+                    </div>
+                    <div class="p-4 flex flex-col flex-grow">
+                        <span class="text-[10px] font-bold text-[#0D9488] uppercase tracking-wider mb-1 block">Tips</span>
+                        <h4
+                            class="text-base font-bold text-[#294C60] mb-2 leading-tight group-hover:text-[#FF8966] transition-colors">
+                            Cara Mengatasi Burnout Akademik
+                        </h4>
+                        <p class="text-slate-500 text-xs mb-4 line-clamp-2">
+                            Merasa lelah terus-menerus karena tugas kuliah? Simak strategi efektif untuk bangkit kembali.
+                        </p>
+                        <a href="#" class="text-[#FF8966] font-bold text-xs hover:underline mt-auto">Baca
+                            Selengkapnya &rarr;</a>
+                    </div>
                 </div>
-                <div class="p-4 flex flex-col flex-grow">
-                    <span class="text-[10px] font-bold text-[#0D9488] uppercase tracking-wider mb-1 block">Lifestyle</span>
-                    <h4 class="text-base font-bold text-[#294C60] mb-2 leading-tight group-hover:text-[#FF8966] transition-colors">
-                        Meditasi 5 Menit Sehari
-                    </h4>
-                    <p class="text-slate-500 text-xs mb-4 line-clamp-2">
-                        Merasa lelah terus-menerus karena tugas kuliah? Simak strategi efektif untuk bangkit kembali.
-                    </p>
-                    <a href="#" class="text-[#FF8966] font-bold text-xs hover:underline mt-auto">Baca Selengkapnya &rarr;</a>
-                </div>
-            </div>
 
-            <div class="group bg-white rounded-2xl overflow-hidden shadow-md border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-                <div class="h-32 bg-[#E0E7FF] relative overflow-hidden shrink-0">
-                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-50"></div>
-                    <div class="w-full h-full flex items-center justify-center text-[#4F46E5] text-2xl font-bold">Self-Care</div>
+                <div
+                    class="group bg-white rounded-2xl overflow-hidden shadow-md border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+                    <div class="h-32 bg-[#F0FDF4] relative overflow-hidden shrink-0">
+                        <div
+                            class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-50">
+                        </div>
+                        <div class="w-full h-full flex items-center justify-center text-[#0D9488] text-2xl font-bold">
+                            MentalKU</div>
+                    </div>
+                    <div class="p-4 flex flex-col flex-grow">
+                        <span
+                            class="text-[10px] font-bold text-[#0D9488] uppercase tracking-wider mb-1 block">Edukasi</span>
+                        <h4
+                            class="text-base font-bold text-[#294C60] mb-2 leading-tight group-hover:text-[#FF8966] transition-colors">
+                            Mengenal Gejala Awal Depresi
+                        </h4>
+                        <p class="text-slate-500 text-xs mb-4 line-clamp-2">
+                            Merasa lelah terus-menerus karena tugas kuliah? Simak strategi efektif untuk bangkit kembali.
+                        </p>
+                        <a href="#" class="text-[#FF8966] font-bold text-xs hover:underline mt-auto">Baca
+                            Selengkapnya &rarr;</a>
+                    </div>
                 </div>
-                <div class="p-4 flex flex-col flex-grow">
-                    <span class="text-[10px] font-bold text-[#4F46E5] uppercase tracking-wider mb-1 block">Rekomendasi</span>
-                    <h4 class="text-base font-bold text-[#294C60] mb-2 leading-tight group-hover:text-[#FF8966] transition-colors">
-                        Pentingnya Digital Detox
-                    </h4>
-                    <p class="text-slate-500 text-xs mb-4 line-clamp-2">
-                        Merasa lelah terus-menerus karena tugas kuliah? Simak strategi efektif untuk bangkit kembali.
-                    </p>
-                    <a href="#" class="text-[#FF8966] font-bold text-xs hover:underline mt-auto">Baca Selengkapnya &rarr;</a>
-                </div>
-            </div>
 
+                <div
+                    class="group bg-white rounded-2xl overflow-hidden shadow-md border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+                    <div class="h-32 bg-[#FFF7ED] relative overflow-hidden shrink-0">
+                        <div
+                            class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-50">
+                        </div>
+                        <div class="w-full h-full flex items-center justify-center text-[#FF8966] text-2xl font-bold">Tips
+                        </div>
+                    </div>
+                    <div class="p-4 flex flex-col flex-grow">
+                        <span
+                            class="text-[10px] font-bold text-[#0D9488] uppercase tracking-wider mb-1 block">Lifestyle</span>
+                        <h4
+                            class="text-base font-bold text-[#294C60] mb-2 leading-tight group-hover:text-[#FF8966] transition-colors">
+                            Meditasi 5 Menit Sehari
+                        </h4>
+                        <p class="text-slate-500 text-xs mb-4 line-clamp-2">
+                            Merasa lelah terus-menerus karena tugas kuliah? Simak strategi efektif untuk bangkit kembali.
+                        </p>
+                        <a href="#" class="text-[#FF8966] font-bold text-xs hover:underline mt-auto">Baca
+                            Selengkapnya &rarr;</a>
+                    </div>
+                </div>
+
+                <div
+                    class="group bg-white rounded-2xl overflow-hidden shadow-md border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+                    <div class="h-32 bg-[#E0E7FF] relative overflow-hidden shrink-0">
+                        <div
+                            class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-50">
+                        </div>
+                        <div class="w-full h-full flex items-center justify-center text-[#4F46E5] text-2xl font-bold">
+                            Self-Care</div>
+                    </div>
+                    <div class="p-4 flex flex-col flex-grow">
+                        <span
+                            class="text-[10px] font-bold text-[#4F46E5] uppercase tracking-wider mb-1 block">Rekomendasi</span>
+                        <h4
+                            class="text-base font-bold text-[#294C60] mb-2 leading-tight group-hover:text-[#FF8966] transition-colors">
+                            Pentingnya Digital Detox
+                        </h4>
+                        <p class="text-slate-500 text-xs mb-4 line-clamp-2">
+                            Merasa lelah terus-menerus karena tugas kuliah? Simak strategi efektif untuk bangkit kembali.
+                        </p>
+                        <a href="#" class="text-[#FF8966] font-bold text-xs hover:underline mt-auto">Baca
+                            Selengkapnya &rarr;</a>
+                    </div>
+                </div>
+
+            </div>
         </div>
-    </div>
 
-</section>
+    </section>
 @endsection
