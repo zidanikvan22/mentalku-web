@@ -19,8 +19,7 @@
     {{-- FILTER BUTTONS --}}
     <div class="flex flex-wrap justify-center gap-3 mb-12 animate-fade-in-up delay-100 overflow-x-auto pb-4 md:pb-0 px-4 md:px-0">
         @php
-        $categories = ['Semua', 'Depresi', 'Stres', 'Kecemasan', 'Self Care'];
-        // $categories = ['Semua', 'Depresi', 'Stres', 'Kecemasan', 'Rawat Diri'];
+        $categories = ['Semua', 'Depresi', 'Stres', 'Kecemasan', 'Rawat Diri'];
         @endphp
 
         @foreach($categories as $cat)
@@ -47,7 +46,9 @@
             <div class="h-48 bg-[#F0F9FF] relative overflow-hidden group">
                 {{-- Handle Image: Cek kalau path-nya url http atau local asset --}}
                 @php
-                $imgSrc = Str::startsWith($item->image_path, 'http') ? $item->image_path : asset($item->image_path);
+                $imgSrc = Str::startsWith($item->image_path, 'http') 
+                    ? $item->image_path 
+                    : asset('assets/img/education/' . $item->image_path);
                 @endphp
                 <img src="{{ $imgSrc }}" alt="{{ $item->title }}"
                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
