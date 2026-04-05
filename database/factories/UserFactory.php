@@ -25,10 +25,14 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'username' => fake()->unique()->userName(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            // Tambahin dua baris ini biar Faker bikin data random yang valid
+            'gender' => fake()->randomElement(['Laki-laki', 'Perempuan']), 
+            'birth_date' => fake()->date('Y-m-d', '-18 years'), // Bikin umur minimal 18 tahun
         ];
     }
 

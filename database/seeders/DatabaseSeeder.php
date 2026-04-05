@@ -15,11 +15,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Bikin 10 user random (opsional, kalau gak butuh lu hapus aja)
+        User::factory(5)->create();
 
+        // Bikin 1 Test User 
         User::factory()->create([
             'name' => 'Test User',
+            'username' => 'testuser123',
             'email' => 'test@example.com',
+            'password' => bcrypt('password123'),
+            // WAJIB ISI INI:
+            'gender' => 'Laki-laki',
+            'birth_date' => '2000-01-01',
+        ]);
+
+        // Manggil Seeder Edukasi
+        $this->call([
+            EducationSeeder::class,
         ]);
     }
 }
