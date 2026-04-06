@@ -163,12 +163,42 @@
                 </div>
 
                 {{-- Right: Content --}}
+                {{-- Right: Content --}}
                 <div class="md:w-3/4">
+                    <style>
+                        /* CSS Khusus buat ngerapihin Markdown bawaan Gemini */
+                        .markdown-ai ul {
+                            list-style-type: disc;
+                            padding-left: 1.5rem;
+                            margin-bottom: 1rem;
+                        }
+
+                        .markdown-ai ol {
+                            list-style-type: decimal;
+                            padding-left: 1.5rem;
+                            margin-bottom: 1rem;
+                        }
+
+                        .markdown-ai li {
+                            margin-bottom: 0.5rem;
+                            line-height: 1.6;
+                        }
+
+                        .markdown-ai strong {
+                            color: #1e293b;
+                            font-weight: 700;
+                        }
+
+                        .markdown-ai p {
+                            margin-bottom: 1rem;
+                            line-height: 1.6;
+                        }
+                    </style>
+
                     <div
-                        class="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-white/50 text-slate-700 leading-relaxed font-medium text-sm md:text-base shadow-sm">
-                        <p class="whitespace-pre-line">
-                            {!! nl2br(e($result->gemini_recommendation)) !!}
-                        </p>
+                        class="bg-white/60 backdrop-blur-sm rounded-xl p-4 md:p-6 border border-white/50 text-slate-700 font-medium text-sm md:text-base shadow-sm markdown-ai">
+                        {{-- Menggunakan Str::markdown untuk memparsing sintaks AI ke HTML --}}
+                        {!! Str::markdown($result->gemini_recommendation) !!}
                     </div>
                 </div>
             </div>
@@ -208,101 +238,49 @@
                 <div class="h-px bg-slate-200 flex-grow"></div>
             </div>
 
-            {{-- Grid Changed to 4 columns on large screens --}}
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
 
-                <div
-                    class="group bg-white rounded-2xl overflow-hidden shadow-md border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-                    <div class="h-32 bg-[#CFE8F3] relative overflow-hidden shrink-0">
-                        <img src="{{ asset('assets/img/illustrations/ilustrasi_v1.png') }}"
-                            class="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-500"
-                            alt="Article">
-                    </div>
-                    <div class="p-4 flex flex-col flex-grow">
-                        <span class="text-[10px] font-bold text-[#0D9488] uppercase tracking-wider mb-1 block">Tips</span>
-                        <h4
-                            class="text-base font-bold text-[#294C60] mb-2 leading-tight group-hover:text-[#FF8966] transition-colors">
-                            Cara Mengatasi Burnout Akademik
-                        </h4>
-                        <p class="text-slate-500 text-xs mb-4 line-clamp-2">
-                            Merasa lelah terus-menerus karena tugas kuliah? Simak strategi efektif untuk bangkit kembali.
-                        </p>
-                        <a href="#" class="text-[#FF8966] font-bold text-xs hover:underline mt-auto">Baca
-                            Selengkapnya &rarr;</a>
-                    </div>
-                </div>
+                @forelse ($relatedEducations as $item)
+                    {{-- Dynamic Card Item --}}
+                    <a href="{{ $item->external_url }}" target="_blank"
+                        class="group bg-white rounded-2xl overflow-hidden shadow-md border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+                        <div class="h-32 bg-[#F0F9FF] relative overflow-hidden shrink-0">
+                            @php
+                                $imgSrc = Str::startsWith($item->image_path, 'http')
+                                    ? $item->image_path
+                                    : asset('assets/img/education/' . $item->image_path);
+                            @endphp
+                            <img src="{{ $imgSrc }}"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                alt="{{ $item->title }}">
+                        </div>
 
-                <div
-                    class="group bg-white rounded-2xl overflow-hidden shadow-md border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-                    <div class="h-32 bg-[#F0FDF4] relative overflow-hidden shrink-0">
-                        <div
-                            class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-50">
+                        <div class="p-4 flex flex-col flex-grow">
+                            <span
+                                class="text-[10px] font-bold text-[#0D9488] uppercase tracking-wider mb-1 block">{{ $item->category }}</span>
+                            <h4
+                                class="text-base font-bold text-[#294C60] mb-2 leading-tight group-hover:text-[#FF8966] transition-colors line-clamp-2">
+                                {{ $item->title }}
+                            </h4>
+                            <p class="text-slate-500 text-xs mb-4 line-clamp-2 flex-grow">
+                                {{ $item->excerpt }}
+                            </p>
+                            <span
+                                class="text-[#FF8966] font-bold text-xs group-hover:translate-x-1 transition-transform mt-auto flex items-center">
+                                Baca Selengkapnya
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 ml-1" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14 5l7 7-7 7" />
+                                </svg>
+                            </span>
                         </div>
-                        <div class="w-full h-full flex items-center justify-center text-[#0D9488] text-2xl font-bold">
-                            MentalKU</div>
+                    </a>
+                @empty
+                    <div class="col-span-full text-center py-8 text-slate-500 text-sm">
+                        Belum ada artikel terkait yang tersedia saat ini.
                     </div>
-                    <div class="p-4 flex flex-col flex-grow">
-                        <span
-                            class="text-[10px] font-bold text-[#0D9488] uppercase tracking-wider mb-1 block">Edukasi</span>
-                        <h4
-                            class="text-base font-bold text-[#294C60] mb-2 leading-tight group-hover:text-[#FF8966] transition-colors">
-                            Mengenal Gejala Awal Depresi
-                        </h4>
-                        <p class="text-slate-500 text-xs mb-4 line-clamp-2">
-                            Merasa lelah terus-menerus karena tugas kuliah? Simak strategi efektif untuk bangkit kembali.
-                        </p>
-                        <a href="#" class="text-[#FF8966] font-bold text-xs hover:underline mt-auto">Baca
-                            Selengkapnya &rarr;</a>
-                    </div>
-                </div>
-
-                <div
-                    class="group bg-white rounded-2xl overflow-hidden shadow-md border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-                    <div class="h-32 bg-[#FFF7ED] relative overflow-hidden shrink-0">
-                        <div
-                            class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-50">
-                        </div>
-                        <div class="w-full h-full flex items-center justify-center text-[#FF8966] text-2xl font-bold">Tips
-                        </div>
-                    </div>
-                    <div class="p-4 flex flex-col flex-grow">
-                        <span
-                            class="text-[10px] font-bold text-[#0D9488] uppercase tracking-wider mb-1 block">Lifestyle</span>
-                        <h4
-                            class="text-base font-bold text-[#294C60] mb-2 leading-tight group-hover:text-[#FF8966] transition-colors">
-                            Meditasi 5 Menit Sehari
-                        </h4>
-                        <p class="text-slate-500 text-xs mb-4 line-clamp-2">
-                            Merasa lelah terus-menerus karena tugas kuliah? Simak strategi efektif untuk bangkit kembali.
-                        </p>
-                        <a href="#" class="text-[#FF8966] font-bold text-xs hover:underline mt-auto">Baca
-                            Selengkapnya &rarr;</a>
-                    </div>
-                </div>
-
-                <div
-                    class="group bg-white rounded-2xl overflow-hidden shadow-md border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-                    <div class="h-32 bg-[#E0E7FF] relative overflow-hidden shrink-0">
-                        <div
-                            class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-50">
-                        </div>
-                        <div class="w-full h-full flex items-center justify-center text-[#4F46E5] text-2xl font-bold">
-                            Self-Care</div>
-                    </div>
-                    <div class="p-4 flex flex-col flex-grow">
-                        <span
-                            class="text-[10px] font-bold text-[#4F46E5] uppercase tracking-wider mb-1 block">Rekomendasi</span>
-                        <h4
-                            class="text-base font-bold text-[#294C60] mb-2 leading-tight group-hover:text-[#FF8966] transition-colors">
-                            Pentingnya Digital Detox
-                        </h4>
-                        <p class="text-slate-500 text-xs mb-4 line-clamp-2">
-                            Merasa lelah terus-menerus karena tugas kuliah? Simak strategi efektif untuk bangkit kembali.
-                        </p>
-                        <a href="#" class="text-[#FF8966] font-bold text-xs hover:underline mt-auto">Baca
-                            Selengkapnya &rarr;</a>
-                    </div>
-                </div>
+                @endforelse
 
             </div>
         </div>

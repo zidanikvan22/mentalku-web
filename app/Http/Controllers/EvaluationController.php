@@ -141,6 +141,48 @@ class EvaluationController extends Controller
     public function showResult($id)
     {
         $result = EvaluationResult::where('user_id', Auth::id())->findOrFail($id);
-        return view('user.self-evaluation-results', compact('result'));
+
+        // --- DUAL-MODALITY CATEGORY ENGINE ---
+        // 1. Mapping Keparahan DASS-21
+        $severityMap = ['Normal' => 0, 'Ringan' => 1, 'Sedang' => 2, 'Berat' => 3, 'Sangat berat' => 4];
+        
+        $dassIndices = [
+            'Depresi' => $severityMap[$result->depression_level] ?? 0,
+            'Kecemasan' => $severityMap[$result->anxiety_level] ?? 0,
+            'Stres' => $severityMap[$result->stress_level] ?? 0,
+        ];
+
+        $maxIndex = max($dassIndices);
+        $targetCategories = [];
+
+        // Ambil kategori objektif yang paling parah
+        if ($maxIndex > 0) {
+            foreach ($dassIndices as $category => $index) {
+                if ($index == $maxIndex) {
+                    $targetCategories[] = $category;
+                }
+            }
+        }
+
+        // 2. Tambahkan kategori subjektif dari Machine Learning
+        if (!empty($result->ml_label) && $result->ml_label !== 'Normal') {
+            $targetCategories[] = $result->ml_label;
+        }
+
+        // 3. Bersihkan Duplikat (Misal DASS = Depresi, LSTM = Depresi)
+        $targetCategories = array_unique($targetCategories);
+
+        // 4. Fallback Protocol (Kalau user ternyata super sehat)
+        if (empty($targetCategories)) {
+            $targetCategories = ['Rawat Diri'];
+        }
+
+        // 5. Query Eksekusi: Ambil 4 artikel acak yang relevan dengan kondisi user
+        $relatedEducations = \App\Models\Education::whereIn('category', $targetCategories)
+            ->inRandomOrder()
+            ->take(4)
+            ->get();
+
+        return view('user.self-evaluation-results', compact('result', 'relatedEducations'));
     }
 }
