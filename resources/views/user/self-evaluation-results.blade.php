@@ -7,7 +7,7 @@
     <style>
         @keyframes progressAnimation {
             from {
-                stroke-dashoffset: 352;
+                stroke-dashoffset: var(--start-offset);
             }
 
             to {
@@ -58,7 +58,7 @@
                             fill="transparent" class="text-slate-100" />
                         <circle cx="48" cy="48" r="40" stroke="currentColor" stroke-width="6"
                             fill="transparent" stroke-dasharray="251" stroke-dashoffset="251"
-                            style="--target-offset: {{ max(0, 251 - ($result->depression_score / 42) * 251) }};"
+                            style="--start-offset: 251;--target-offset: {{ max(0, 251 - ($result->depression_score / 42) * 251) }};"
                             class="text-[#294C60] animate-progress" />
                     </svg>
                     <div class="absolute text-center">
@@ -71,7 +71,7 @@
 
             {{-- CARD 2: STRES --}}
             <div
-                class="bg-white rounded-2xl p-5 shadow-xl border-t-4 border-[#FF8966] flex flex-col items-center relative z-10 transform md:-translate-y-2">
+                class="bg-white rounded-2xl p-5 shadow-xl border-t-4 border-[#FF8966] flex flex-col items-center relative z-10">
                 <div class="flex items-center gap-3 mb-4 w-full justify-center border-b border-orange-50 pb-3">
                     <div class="w-8 h-8 rounded-full bg-orange-50 flex items-center justify-center text-[#FF8966]">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -88,7 +88,7 @@
                             fill="transparent" class="text-orange-50" />
                         <circle cx="56" cy="56" r="46" stroke="currentColor" stroke-width="7"
                             fill="transparent" stroke-dasharray="289" stroke-dashoffset="289"
-                            style="--target-offset: {{ max(0, 289 - ($result->stress_score / 42) * 289) }};"
+                            style="--start-offset: 289; --target-offset: {{ max(0, 289 - ($result->stress_score / 42) * 289) }};"
                             class="text-[#FF8966] animate-progress" />
                     </svg>
                     <div class="absolute text-center">
@@ -119,7 +119,7 @@
                             fill="transparent" class="text-teal-50" />
                         <circle cx="48" cy="48" r="40" stroke="currentColor" stroke-width="6"
                             fill="transparent" stroke-dasharray="251" stroke-dashoffset="251"
-                            style="--target-offset: {{ max(0, 251 - ($result->anxiety_score / 42) * 251) }};"
+                            style="--start-offset: 251; --target-offset: {{ max(0, 251 - ($result->anxiety_score / 42) * 251) }};"
                             class="text-[#0D9488] animate-progress" />
                     </svg>
                     <div class="absolute text-center">
@@ -207,15 +207,24 @@
         {{-- ACTION BUTTONS & DISCLAIMER --}}
         <div class="flex flex-col items-center gap-6 mb-12 animate-fade-in-up delay-300 max-w-4xl mx-auto">
             <div
-                class="bg-red-50 border border-red-100 px-4 py-3 rounded-lg text-red-500 text-xs md:text-sm flex items-start gap-2 w-full justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0 mt-0.5" viewBox="0 0 20 20"
-                    fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                        clip-rule="evenodd" />
+                class="bg-rose-50 border-l-4 border-rose-500 p-5 rounded-r-xl shadow-sm text-rose-700 text-sm flex items-start gap-3 w-full">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 mt-0.5 text-rose-500" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
-                <p><strong>Catatan Penting:</strong> Hasil ini tidak menggantikan diagnosis profesional. Jika butuh bantuan
-                    segera, hubungi profesional.</p>
+                <div class="leading-relaxed">
+                    <p class="font-bold text-base mb-1">Peringatan Medis & Legalitas</p>
+                    <p>
+                        Sistem MentalKU dirancang secara eksklusif sebagai instrumen skrining awal (Self-Assessment) dan
+                        bukan merupakan alat diagnostik medis.
+                        Sesuai dengan <strong>Undang-Undang No. 17 Tahun 2023 tentang Kesehatan</strong> dan <strong>Kode
+                            Etik Psikologi Indonesia (HIMPSI)</strong>, diagnosis klinis yang sah hanya dapat ditegakkan
+                        oleh tenaga profesional (Psikolog Klinis / Psikiater) melalui pemeriksaan psikologis secara
+                        komprehensif dan tatap muka. Jangan menggunakan hasil sistem ini untuk melakukan
+                        <em>self-diagnosis</em>.
+                    </p>
+                </div>
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3 w-full justify-center">
