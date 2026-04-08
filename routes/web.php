@@ -63,6 +63,9 @@ Route::middleware(['auth'])->group(function () {
     // 5. Result
     Route::get('/result/{id}', [EvaluationController::class, 'showResult'])->name('evaluation.result');
 
+    // 6. Activity History Detail
+    Route::get('/activity-history/{id}', [EvaluationController::class, 'historyDetail'])->name('evaluation.history');
+
     // 4. Fitur Evaluasi Diri (Sementara masih View Only dulu)
     // Kita amanin di sini biar tamu gak bisa asal akses tes mental.
     // Route::get('/self-evaluation-cover', function () {

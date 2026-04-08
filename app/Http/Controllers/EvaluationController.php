@@ -185,4 +185,17 @@ class EvaluationController extends Controller
 
         return view('user.self-evaluation-results', compact('result', 'relatedEducations'));
     }
+
+    // 8. Halaman Activity History Detail
+    public function historyDetail($id)
+    {
+        $result = EvaluationResult::where('user_id', Auth::id())->findOrFail($id);
+        
+        // Kita hitung ini tes ke-berapa milik user tersebut
+        $testNumber = EvaluationResult::where('user_id', Auth::id())
+            ->where('created_at', '<=', $result->created_at)
+            ->count();
+
+        return view('user.activity-history', compact('result', 'testNumber'));
+    }
 }

@@ -12,8 +12,12 @@ class ProfileController extends Controller
     // 1. Tampilkan Halaman Profil
     public function index()
     {
-        $user = Auth::user();
-        return view('user.profile', compact('user'));
+        // Ambil riwayat evaluasi dari yang PALING LAMA ke TERBARU biar kita bisa dapet nomor urut asli (Evaluasi 1, 2, dst)
+        $histories = \App\Models\EvaluationResult::where('user_id', \Illuminate\Support\Facades\Auth::id())
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        return view('user.profile', compact('histories'));
     }
 
     // 2. Tampilkan Halaman Edit

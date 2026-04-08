@@ -298,71 +298,37 @@
         </div>
 
         <div class="space-y-4">
-
-            <div
-                class="bg-white rounded-2xl p-4 md:p-6 shadow-md border-l-8 border-[#F43F5E] hover:shadow-lg transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            @forelse($histories->reverse() as $index => $history)
+            <div class="bg-white rounded-2xl p-4 md:p-6 shadow-md border-l-8 border-[#0D9488] hover:shadow-lg transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                     <div class="flex items-center gap-3 mb-1">
-                        <h3 class="text-lg font-bold text-[#294C60]">Evaluasi Diri 1</h3>
-                        <span class="bg-rose-100 text-[#F43F5E] text-xs font-bold px-3 py-1 rounded-full">Tinggi</span>
+                        {{-- Logic Nomor Urut Asli --}}
+                        <h3 class="text-lg font-bold text-[#294C60]">Evaluasi Diri {{ $histories->count() - $loop->index }}</h3>
+
+                        {{-- Label Dinamis berdasarkan final_level atau max score --}}
+                        <span class="bg-teal-100 text-[#0D9488] text-xs font-bold px-3 py-1 rounded-full">
+                            {{ $history->final_level ?? 'Selesai' }}
+                        </span>
                     </div>
-                    <p class="text-sm text-slate-400 mb-2">18 Mei 2025, 20:30</p>
+                    <p class="text-sm text-slate-400 mb-2">{{ $history->created_at->translatedFormat('d F Y, H:i') }}</p>
                     <p class="text-sm font-medium text-slate-600">
-                        Skor: Depresi (<span class="text-[#F43F5E]">18</span>), Kecemasan (15), Stres (19)
+                        Skor: Depresi ({{ $history->depression_score }}), Kecemasan ({{ $history->anxiety_score }}), Stres ({{ $history->stress_score }})
                     </p>
                 </div>
-                <button class="btn btn-circle btn-ghost text-slate-400 hover:bg-slate-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
-                    </svg>
-                </button>
-            </div>
 
-            <div
-                class="bg-white rounded-2xl p-4 md:p-6 shadow-md border-l-8 border-[#F59E0B] hover:shadow-lg transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <div class="flex items-center gap-3 mb-1">
-                        <h3 class="text-lg font-bold text-[#294C60]">Evaluasi Diri 2</h3>
-                        <span
-                            class="bg-amber-100 text-[#F59E0B] text-xs font-bold px-3 py-1 rounded-full">Sedang</span>
-                    </div>
-                    <p class="text-sm text-slate-400 mb-2">16 April 2025, 22:30</p>
-                    <p class="text-sm font-medium text-slate-600">
-                        Skor: Depresi (15), Kecemasan (10), Stres (<span class="text-[#F59E0B]">12</span>)
-                    </p>
-                </div>
-                <button class="btn btn-circle btn-ghost text-slate-400 hover:bg-slate-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+                {{-- Button Mata / Detail --}}
+                <a href="{{ route('evaluation.history', $history->id) }}" class="btn btn-circle btn-ghost text-[#0D9488] hover:bg-teal-50" title="Lihat Detail">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                     </svg>
-                </button>
+                </a>
             </div>
-
-            <div
-                class="bg-white rounded-2xl p-4 md:p-6 shadow-md border-l-8 border-[#0D9488] hover:shadow-lg transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <div class="flex items-center gap-3 mb-1">
-                        <h3 class="text-lg font-bold text-[#294C60]">Evaluasi Diri 3</h3>
-                        <span class="bg-teal-100 text-[#0D9488] text-xs font-bold px-3 py-1 rounded-full">Rendah</span>
-                    </div>
-                    <p class="text-sm text-slate-400 mb-2">10 Maret 2025, 09:15</p>
-                    <p class="text-sm font-medium text-slate-600">
-                        Skor: Depresi (5), Kecemasan (6), Stres (6)
-                    </p>
-                </div>
-                <button class="btn btn-circle btn-ghost text-slate-400 hover:bg-slate-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
-                    </svg>
-                </button>
+            @empty
+            <div class="text-center py-8 text-slate-500">
+                Belum ada riwayat aktivitas evaluasi.
             </div>
-
+            @endforelse
         </div>
 
         <div class="flex justify-center mt-10">
