@@ -10,12 +10,21 @@ use App\Models\User;
 class ProfileController extends Controller
 {
     // 1. Tampilkan Halaman Profil
-    public function index()
+    public function index(\Illuminate\Http\Request $request)
     {
-        // Ambil riwayat evaluasi dari yang PALING LAMA ke TERBARU biar kita bisa dapet nomor urut asli (Evaluasi 1, 2, dst)
-        $histories = \App\Models\EvaluationResult::where('user_id', \Illuminate\Support\Facades\Auth::id())
-            ->orderBy('created_at', 'asc')
-            ->get();
+        $query = \App\Models\EvaluationResult::where('user_id', \Illuminate\Support\Facades\Auth::id());
+
+        // 1. Filter by Final Level
+        if ($request->has('level') && $request->level != 'Semua') {
+            $query->where('final_level', $request->level);
+        }
+
+        // 2. Sort by Waktu (Terbaru / Terlama)
+        $sortOrder = $request->sort == 'asc' ? 'asc' : 'desc'; // Default desc (Terbaru)
+        $query->orderBy('created_at', $sortOrder);
+
+        // 3. Pagination (3 per halaman) & Bawa query string biar pagination gak error
+        $histories = $query->paginate(3)->appends($request->query());
 
         return view('user.profile', compact('histories'));
     }
@@ -44,9 +53,14 @@ class ProfileController extends Controller
             'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Max 2MB
         ]);
 
+        // Cek file error (misal kebesaran dari php.ini upload_max_filesize)
+        if ($request->has('profile_photo') && $request->file('profile_photo') != null && !$request->file('profile_photo')->isValid()) {
+            return back()->withInput()->withErrors(['profile_photo' => 'Ukuran file gambar terlalu besar atau terjadi kesalahan. (Max 2MB)']);
+        }
+
         // Logic Update Foto Profil
-        if ($request->hasFile('profile_photo')) {
-            // Hapus foto lama jika ada (dan bukan default/ui-avatars)
+        if ($request->hasFile('profile_photo') && $request->file('profile_photo')->isValid()) {
+            // Hapus foto lama jika ada
             if ($user->profile_photo_path && Storage::exists('public/' . $user->profile_photo_path)) {
                 Storage::delete('public/' . $user->profile_photo_path);
             }
@@ -54,6 +68,9 @@ class ProfileController extends Controller
             // Simpan foto baru
             $path = $request->file('profile_photo')->store('profile-photos', 'public');
             $user->profile_photo_path = $path;
+            
+            // Unset delete_photo supaya ga bentrok
+            $request->merge(['delete_photo' => '0']);
         }
 
         // Cek jika user minta hapus foto (opsional, via tombol hapus)

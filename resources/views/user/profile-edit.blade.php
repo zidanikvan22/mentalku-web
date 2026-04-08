@@ -55,6 +55,9 @@
                         {{-- Input Hidden buat flag delete --}}
                         <input type="hidden" name="delete_photo" id="deletePhotoInput" value="0">
                     </div>
+                    @error('profile_photo')
+                        <span class="text-sm font-semibold text-rose-500 mt-3">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
 
@@ -67,7 +70,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#0D9488]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
-                        Informasi Dasar (Tidak dapat diubah)
+                        Informasi Dasar
                     </h3>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -80,7 +83,7 @@
 
                         {{-- Username --}}
                         <div class="form-control">
-                            <label class="label font-semibold text-slate-600">Username</label>
+                            <label class="label font-semibold text-slate-600">Nama Panggilan</label>
                             <input type="text" value="{{ $user->username }}" readonly
                                 class="input input-bordered w-full rounded-xl bg-slate-100 text-slate-500 cursor-not-allowed border-slate-200" />
                         </div>
@@ -108,9 +111,9 @@
 
                         {{-- No HP (Editable) --}}
                         <div class="form-control md:col-span-2">
-                            <label class="label font-semibold text-slate-600">Nomor HP / WhatsApp <span class="text-xs text-[#0D9488] ml-1">(Bisa diedit)</span></label>
+                            <label class="label font-semibold text-slate-600">Nomor HP / WhatsApp</label>
                             <input type="tel" name="phone" value="{{ old('phone', $user->phone) }}"
-                                class="input input-bordered w-full rounded-xl focus:outline-[#0D9488] focus:border-[#0D9488]" />
+                                class="input input-bordered w-full rounded-xl focus:outline-[#0D9488] focus:border-[#0D9488]" placeholder="Contoh: 081234567890"/>
                         </div>
                     </div>
                 </div>
@@ -160,7 +163,7 @@
                         <div class="form-control">
                             <label class="label font-semibold text-slate-600">Kota / Kabupaten</label>
                             <input type="text" name="city" value="{{ old('city', $user->city) }}"
-                                class="input input-bordered w-full rounded-xl focus:outline-[#0D9488] focus:border-[#0D9488]" />
+                                class="input input-bordered w-full rounded-xl focus:outline-[#0D9488] focus:border-[#0D9488]" placeholder="Contoh: Jakarta, Bandung, Batam" />
                         </div>
 
                         {{-- Pendidikan --}}
@@ -199,6 +202,9 @@
 <script>
     function previewImage(input) {
         if (input.files && input.files[0]) {
+            // Jika user memilih file baru, batalkan flag delete_photo
+            document.getElementById('deletePhotoInput').value = '0';
+
             var reader = new FileReader();
             reader.onload = function(e) {
                 document.getElementById('avatarPreview').src = e.target.result;
