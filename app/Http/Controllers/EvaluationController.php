@@ -144,7 +144,7 @@ class EvaluationController extends Controller
 
         // --- DUAL-MODALITY CATEGORY ENGINE ---
         // 1. Mapping Keparahan DASS-21
-        $severityMap = ['Normal' => 0, 'Ringan' => 1, 'Sedang' => 2, 'Berat' => 3, 'Sangat berat' => 4];
+        $severityMap = ['Normal' => 0, 'Ringan' => 1, 'Sedang' => 2, 'Parah' => 3, 'Sangat Parah' => 4];
         
         $dassIndices = [
             'Depresi' => $severityMap[$result->depression_level] ?? 0,

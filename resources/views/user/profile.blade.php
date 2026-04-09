@@ -295,9 +295,9 @@
                         <option value="Normal" {{ request('level') == 'Normal' ? 'selected' : '' }}>Normal</option>
                         <option value="Ringan" {{ request('level') == 'Ringan' ? 'selected' : '' }}>Ringan</option>
                         <option value="Sedang" {{ request('level') == 'Sedang' ? 'selected' : '' }}>Sedang</option>
-                        <option value="Berat" {{ request('level') == 'Berat' ? 'selected' : '' }}>Berat</option>
-                        <option value="Sangat Berat" {{ request('level') == 'Sangat Berat' ? 'selected' : '' }}>Sangat
-                            Berat</option>
+                        <option value="Parah" {{ request('level') == 'Parah' ? 'selected' : '' }}>Parah</option>
+                        <option value="Sangat Parah" {{ request('level') == 'Sangat Parah' ? 'selected' : '' }}>Sangat
+                            Parah</option>
                     </select>
 
                     {{-- Dropdown Urutkan Waktu --}}
@@ -334,17 +334,17 @@
                                 'text' => 'text-[#F59E0B]',
                                 'border' => 'border-[#F59E0B]',
                             ],
-                            'Berat' => [
+                            'Parah' => [
                                 'bg' => 'bg-orange-100',
                                 'text' => 'text-orange-500',
                                 'border' => 'border-orange-500',
                             ],
-                            'Sangat Berat' => [
+                            'Sangat Parah' => [
                                 'bg' => 'bg-rose-100',
                                 'text' => 'text-[#F43F5E]',
                                 'border' => 'border-[#F43F5E]',
                             ],
-                            'Sangat berat' => [
+                            'Sangat parah' => [
                                 'bg' => 'bg-rose-100',
                                 'text' => 'text-[#F43F5E]',
                                 'border' => 'border-[#F43F5E]',
