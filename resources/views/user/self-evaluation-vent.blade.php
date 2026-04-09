@@ -25,7 +25,7 @@
             <div class="flex justify-between items-center mb-3">
                 <div>
                     <h2 class="text-xl font-bold text-[#294C60]">Bagian 4: Ruang Bercerita</h2>
-                    <p class="text-xs text-slate-400 mt-1">Ekspresikan perasaanmu (Opsional).</p>
+                    <p class="text-xs text-slate-400 mt-1">Ekspresikan perasaanmu.</p>
                 </div>
                 <div class="text-right">
                     <span class="text-2xl font-extrabold text-[#0D9488]">4</span>
@@ -81,15 +81,44 @@
                 </div>
 
                 {{-- Update Action ke 'evaluation.submit' --}}
-                <form action="{{ route('evaluation.submit') }}" method="POST" class="flex-grow flex flex-col min-h-0">
+                <form id="ventForm" action="{{ route('evaluation.submit') }}" method="POST" class="flex-grow flex flex-col min-h-0">
                     @csrf
 
                     {{-- Textarea --}}
-                    <div class="relative flex-grow mb-4 group">
+                    {{-- <div class="relative flex-grow mb-4 group"> --}}
                         {{-- Tambahkan name="vent" dan isi value dari session --}}
-                        <textarea name="vent"
+                        {{-- <textarea name="vent"
                             class="w-full h-full bg-[#F8FAFC] border border-slate-200 rounded-2xl p-5 text-sm md:text-base text-slate-700 leading-relaxed resize-none focus:outline-none focus:ring-2 focus:ring-[#0D9488]/20 focus:border-[#0D9488] transition-all placeholder:text-slate-300 custom-scrollbar"
                             placeholder="Mulai menulis di sini...&#10;Contoh: 'Hari ini rasanya berat sekali karena...'">{{ $existingVent }}</textarea>
+                    </div> --}}
+
+                    {{-- Textarea --}}
+                    <div class="relative flex-grow mb-4 flex flex-col group">
+                        {{-- 
+                            The UX Fix: 
+                            1. Pasang required, minlength, maxlength biar dicegat langsung oleh browser sebelum hit server.
+                            2. Pakai old('vent', $existingVent) biar kalau kena error, tulisan capek-capek user gak hilang!
+                            3. Dynamic border warna merah kalau kena error Laravel.
+                        --}}
+                        <textarea name="vent" id="vent"
+                            {{-- required minlength="10" maxlength="1000" --}}
+                            class="w-full h-full bg-[#F8FAFC] border @error('vent') border-rose-500 ring-2 ring-rose-500/20 @else border-slate-200 focus:border-[#0D9488] focus:ring-[#0D9488]/20 @enderror rounded-2xl p-5 text-sm md:text-base text-slate-700 leading-relaxed resize-none focus:outline-none focus:ring-2 transition-all placeholder:text-slate-300 custom-scrollbar"
+                            placeholder="Mulai menulis di sini...&#10;Contoh: 'Hari ini rasanya berat sekali karena...'">{{ old('vent', $existingVent) }}</textarea>
+
+                        {{-- Pesan Error Validasi dari Laravel --}}
+                        @error('vent')
+                            <div class="text-rose-500 text-xs font-bold mt-2 px-2 flex items-center gap-1 animate-fade-in-up">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                                <span>{{ $message }}</span>
+                            </div>
+                        @enderror
+                        
+                        {{-- Character Counter (Opsional tapi UX-nya level dewa) --}}
+                        <div class="absolute bottom-3 right-4 text-[10px] font-bold text-slate-300 group-focus-within:text-[#0D9488] transition-colors pointer-events-none bg-white/80 px-2 py-0.5 rounded-full">
+                            Maks 1000 karakter
+                        </div>
                     </div>
 
                     {{-- Action Buttons --}}
@@ -105,7 +134,7 @@
                         </a>
 
                         {{-- Tombol SIMPAN / SELESAI --}}
-                        <button type="submit"
+                        <button id="submitBtn" type="submit"
                             class="btn bg-[#FF8966] hover:bg-orange-600 text-white border-none rounded-full px-4 md:px-8 h-10 min-h-[2.5rem] text-xs md:text-sm shadow-md hover:shadow-lg flex items-center gap-1 md:gap-2 transition-all">
                             <span>Selesai & Lihat Hasil</span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
@@ -116,6 +145,28 @@
                 </form>
 
             </div>
+        </div>
+    </div>
+
+    {{-- OVERLAY LOADING SCREEN (Hidden by default) --}}
+    <div id="loadingOverlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] hidden flex-col items-center justify-center opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-[24px] p-8 md:p-10 flex flex-col items-center shadow-2xl max-w-sm w-[90%] transform scale-95 transition-transform duration-300" id="loadingModal">
+            
+            {{-- Animated Brain / Spinner Indicator --}}
+            <div class="relative w-20 h-20 mb-6">
+                <div class="absolute inset-0 rounded-full border-4 border-slate-100"></div>
+                <div class="absolute inset-0 rounded-full border-4 border-[#0D9488] border-t-transparent animate-spin"></div>
+                <div class="absolute inset-0 flex items-center justify-center text-[#294C60]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-extrabold text-[#294C60] mb-2 text-center">Menyiapkan Hasilmu...</h3>
+            <p class="text-sm text-slate-500 text-center leading-relaxed">
+                AI kami sedang membaca curhatanmu secara rahasia dan menyusun rekomendasi personal. <br> <span class="font-bold text-[#FF8966] animate-pulse">Mohon tunggu sebentar.</span>
+            </p>
         </div>
     </div>
 </section>
@@ -139,4 +190,40 @@
         background-color: #94a3b8;
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const ventForm = document.getElementById('ventForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const loadingModal = document.getElementById('loadingModal');
+
+        ventForm.addEventListener('submit', function(e) {
+            // Kita biarkan HTML5 validation jalan dulu (kalau ada)
+            
+            // 1. Tampilkan Overlay
+            loadingOverlay.classList.remove('hidden');
+            loadingOverlay.classList.add('flex');
+            
+            // 2. Trigger Animasi Fade & Scale
+            setTimeout(() => {
+                loadingOverlay.classList.remove('opacity-0');
+                loadingOverlay.classList.add('opacity-100');
+                loadingModal.classList.remove('scale-95');
+                loadingModal.classList.add('scale-100');
+            }, 10); // small delay for CSS transition to catch
+
+            // 3. Disable tombol biar gak di-klik 2 kali
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            submitBtn.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Memproses...
+            `;
+        });
+    });
+</script>
 @endsection

@@ -18,6 +18,7 @@ class EvaluationResult extends Model
         'stress_score',
         'stress_level',
         'ml_label',
+        'vent_text',
         'gemini_recommendation',
         'average_score',
         'final_level',

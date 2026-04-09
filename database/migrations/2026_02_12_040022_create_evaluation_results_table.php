@@ -28,6 +28,7 @@ return new class extends Migration
             
             // Hasil Analisa ML (Vent)
             $table->string('ml_label')->nullable(); // e.g., "Butuh Penanganan Segera"
+            $table->text('vent_text')->nullable(); // Teks asli dari Vent
             
             // Rekomendasi Gemini
             $table->text('gemini_recommendation')->nullable();

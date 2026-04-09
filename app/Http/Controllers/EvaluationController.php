@@ -73,14 +73,36 @@ class EvaluationController extends Controller
     // 5. Halaman Curhat (Vent)
     public function vent()
     {
+        // ANTI-BACK BUTTON LOGIC:
+        // Cek apakah user punya session 21 jawaban. Kalau gak ada, berarti dia nge-klik 'Back' dari halaman hasil.
+        $answersAssoc = session('evaluation_answers', []);
+        if (count($answersAssoc) < 21) {
+            return redirect()->route('evaluation.cover')->with('error', 'Sesi evaluasi sudah selesai atau tidak valid. Silakan mulai ulang.');
+        }
+
         // Ambil tulisan yang mungkin udah diketik sebelumnya
         $existingVent = session('evaluation_vent', '');
-        return view('user.self-evaluation-vent', compact('existingVent'));
+        
+        // KASIH HEADER NO-CACHE BIAR BROWSER GAK BIKIN HALAMAN HANTU
+        return response()
+            ->view('user.self-evaluation-vent', compact('existingVent'))
+            ->header('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
     }
 
     // 6. Submit Akhir & Mocking API
     public function submit(Request $request)
     {
+        // 0. Validasi Input (Wajib isi, min 10 karakter, max 1000)
+        $request->validate([
+            'vent' => 'required|string|min:10|max:1000'
+        ], [
+            'vent.required' => 'Ceritakan sedikit perasaanmu sebelum melihat hasil.',
+            'vent.min' => 'Ceritamu terlalu singkat (minimal 10 karakter).',
+            'vent.max' => 'Ceritamu terlalu panjang (maksimal 1000 karakter).'
+        ]);
+
         // 1. Simpan curhatan ke session
         session(['evaluation_vent' => $request->vent]);
 
@@ -114,6 +136,7 @@ class EvaluationController extends Controller
                     'stress_score' => $data['scores']['stress'],
                     'stress_level' => $data['levels']['stress'],
                     'ml_label' => $data['ml_analysis']['label'],
+                    'vent_text' => $vent,
                     'gemini_recommendation' => $data['gemini']['recommendation'],
                     'average_score' => $data['average_score'],
                     'final_level' => $data['final_level'],
