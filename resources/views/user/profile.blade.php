@@ -145,7 +145,7 @@
                             <div>
                                 <p class="text-xs text-slate-500 uppercase font-bold tracking-wider">Tanggal Lahir</p>
                                 <p class="text-base md:text-lg font-semibold text-[#294C60]">
-                                    {{ \Carbon\Carbon::parse(Auth::user()->birth_date)->translatedFormat('d F Y') }}
+                                    {{ \Carbon\Carbon::parse(Auth::user()->birth_date)->locale('id')->translatedFormat('d F Y') }}                                  
                                 </p>
                             </div>
                         </div>
@@ -373,7 +373,7 @@
                                 </span>
                             </div>
                             <p class="text-sm text-slate-400 mb-2">
-                                {{ $history->created_at->translatedFormat('d F Y, H:i') }}</p>
+                                {{ $history->created_at->locale('id')->translatedFormat('d F Y, H:i') }}</p>
                             <p class="text-sm font-medium text-slate-600">
                                 Skor: Depresi ({{ $history->depression_score }}), Kecemasan
                                 ({{ $history->anxiety_score }}), Stres ({{ $history->stress_score }})

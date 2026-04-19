@@ -19,7 +19,7 @@ class AuthController extends Controller
             'gender' => 'required|in:Laki-laki,Perempuan',
             'birth_date' => 'required|date|before_or_equal:' . now()->subYears(17)->format('Y-m-d'),
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8|confirmed',
+            'password' => ['required', 'min:8', 'confirmed', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]+$/'],
         ], [
             'name.required' => 'Nama lengkap wajib diisi.',
             'name.string' => 'Nama lengkap harus berupa teks.',
@@ -45,6 +45,7 @@ class AuthController extends Controller
             'password.required' => 'Kata sandi wajib diisi.',
             'password.min' => 'Kata sandi harus minimal 8 karakter.',
             'password.confirmed' => 'Konfirmasi kata sandi tidak cocok.',
+            'password.regex' => 'Kata sandi harus mengandung kombinasi huruf besar, kecil, angka, dan bentuk simbol (!@#$%^&*). Simbol lain atau spasi tidak diperbolehkan.',
         ]);
 
         if ($validator->fails()) {
@@ -92,7 +93,7 @@ class AuthController extends Controller
             $user = Auth::user();
 
             // Redirect ke dashboard dengan pesan sukses
-            return redirect()->intended('dashboard')->with('login_success', 'Selamat datang kembali! Senang melihatmu lagi ' . $user->name . '.');
+            return redirect()->intended('dashboard')->with('login_success', $user->name);
         }
 
         // 4. Kalau Gagal
@@ -111,6 +112,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('logout_success', 'Berhasil keluar, sampai jumpa lagi ' . $name . '.'); // Balik ke landing page
+        return redirect('/')->with('logout_success', $name); // Balik ke landing page
     }
 }

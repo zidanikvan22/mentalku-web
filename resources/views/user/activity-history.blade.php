@@ -19,7 +19,7 @@
             <p
                 class="mt-2 inline-block px-4 py-1.5 bg-slate-100 rounded-full text-slate-600 text-sm font-semibold border border-slate-200">
                 Tes Evaluasi Diri {{ $testNumber }} ini dilakukan pada
-                {{ $result->created_at->translatedFormat('l, d F Y - H:i') }} WIB
+                {{ $result->created_at->locale('id')->translatedFormat('l, d F Y - H:i') }} WIB
             </p>
         </div>
 
@@ -29,12 +29,12 @@
             {{-- CARD 1: DEPRESI --}}
             <div class="bg-white rounded-2xl p-5 shadow-lg border-t-4 border-[#294C60] flex flex-col items-center gap-3">
                 <div class="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center mt-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#294C60]" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round" />
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 15s1.5-2 4-2 4 2 4 2" />
-                        <line x1="9" y1="9" x2="9.01" y2="9" stroke-width="3" />
-                        <line x1="15" y1="9" x2="15.01" y2="9" stroke-width="3" />
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#294C60]" viewBox="0 0 24 24" fill="none" 
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+                        <path d="M16 14v6" />
+                        <path d="M8 14v6" />
+                        <path d="M12 16v6" />
                     </svg>
                 </div>
                 <p class="text-sm font-semibold text-slate-500 tracking-wide">Depresi</p>
@@ -54,10 +54,9 @@
             {{-- CARD 2: STRES --}}
             <div class="bg-white rounded-2xl p-5 shadow-lg border-t-4 border-[#FF8966] flex flex-col items-center gap-3">
                 <div class="w-11 h-11 rounded-xl bg-orange-50 flex items-center justify-center mt-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#FF8966]" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round" />
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3" />
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#FF8966]" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
                     </svg>
                 </div>
                 <p class="text-sm font-semibold text-slate-500 tracking-wide">Stres</p>
@@ -77,10 +76,9 @@
             {{-- CARD 3: KECEMASAN --}}
             <div class="bg-white rounded-2xl p-5 shadow-lg border-t-4 border-[#0D9488] flex flex-col items-center gap-3">
                 <div class="w-11 h-11 rounded-xl bg-teal-50 flex items-center justify-center mt-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#0D9488]" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#0D9488]" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
                     </svg>
                 </div>
                 <p class="text-sm font-semibold text-slate-500 tracking-wide">Kecemasan</p>

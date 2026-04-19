@@ -135,26 +135,26 @@
                 @php
                     $benefits = [
                         [
-                            'icon' => '❤️🩹',
+                            'icon' => '🧠',
                             'title' => 'Pahami Diri, Kenali Emosi',
                             'desc' =>
                                 'Kenali depresi, cemas, stres awal Anda. Dapatkan wawasan diri dan mulai langkah preventif demi kesejahteraan mental yang lebih baik.',
                         ],
                         [
-                            'icon' => '👆',
+                            'icon' => '🚀',
                             'title' => 'Akses Mudah & Cepat',
                             'desc' =>
                                 'Skrining mental mudah, cepat, responsif. Akses Mentalku kapan pun, di mana pun dari laptop atau ponsel Anda. Bebas hambatan.',
                         ],
                         [
-                            'icon' => '💡',
+                            'icon' => '🤖',
                             'title' => 'Inovasi Kesehatan Digital',
-                            'desc' => 'Mendorong inovasi kesehatan dengan Artificial Intelligence, untuk masyarakat yang lebih sehat',
+                            'desc' => 'Mendorong inovasi kesehatan dengan Artificial Intelligence, untuk masyarakat yang lebih sehat.',
                         ],
                         [
                             'icon' => '📈',
                             'title' => 'Progres Lebih Terpantau',
-                            'desc' => 'Pantau perjalanan kesehatan mental Anda dengan Skrining berkala di Mentalku',
+                            'desc' => 'Pantau perjalanan kesehatan mental Anda dengan Skrining berkala di Mentalku.',
                         ],
                     ];
                 @endphp
