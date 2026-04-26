@@ -228,11 +228,11 @@
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3 w-full justify-center">
-                <a href="/question"
+                <a href="{{ route('evaluation.cover') }}"
                     class="btn btn-outline border-slate-300 text-slate-500 hover:bg-slate-50 hover:border-slate-400 rounded-full px-8 min-h-[2.5rem] h-10 text-sm font-bold">
                     Tes Ulang
                 </a>
-                <a href="/"
+                <a href="{{ route('dashboard') }}"
                     class="btn bg-[#FF8966] hover:bg-orange-600 text-white border-none rounded-full px-8 shadow-md hover:shadow-orange-200/50 min-h-[2.5rem] h-10 text-sm">
                     Kembali ke Dashboard
                 </a>

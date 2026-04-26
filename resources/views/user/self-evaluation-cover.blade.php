@@ -11,6 +11,17 @@
     <section class="container mx-auto px-4 py-10 md:px-0 flex flex-col justify-center items-center"
         style="min-height: calc(100vh - 160px); margin-top: 70px;">
 
+        {{-- Back Button --}}
+        <div class="w-full max-w-[1100px] flex justify-start mb-6 animate-fade-in-up">
+            <a href="{{ route('dashboard') }}" 
+               class="group inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-[#294C60] bg-white/80 backdrop-blur-sm border border-[#294C60]/20 rounded-full hover:bg-[#294C60] hover:text-white hover:border-[#294C60] transition-all duration-300 shadow-sm hover:shadow-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform group-hover:-translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Kembali ke Beranda
+            </a>
+        </div>
+
         <div
             class="w-full max-w-[1100px] bg-white rounded-[30px] shadow-2xl overflow-hidden border border-slate-100 flex flex-col lg:flex-row animate-fade-in-up">
 

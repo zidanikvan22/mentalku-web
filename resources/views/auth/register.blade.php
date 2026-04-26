@@ -33,7 +33,7 @@
                     <div class="form-control">
                         <label class="label py-1"><span class="label-text font-semibold text-[#294C60] text-xs md:text-sm">Jenis Kelamin</span></label>
                         <select name="gender" class="select select-bordered w-full focus:outline-[#0D9488]" required>
-                            <option disabled selected>Pilih...</option>
+                            <option value="" disabled selected>Pilih...</option>
                             <option value="Laki-laki">Laki-laki</option>
                             <option value="Perempuan">Perempuan</option>
                         </select>

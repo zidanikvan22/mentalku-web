@@ -51,6 +51,10 @@ class ProfileController extends Controller
             'city' => 'nullable|string|max:100',
             'education' => 'nullable|string',
             'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Max 2MB
+        ], [
+            'profile_photo.image' => 'Foto profil harus berupa file gambar.',
+            'profile_photo.mimes' => 'Foto profil harus berformat jpeg, png, atau jpg.',
+            'profile_photo.max' => 'Ukuran foto profil tidak boleh lebih dari 2MB.'
         ]);
 
         // Cek file error (misal kebesaran dari php.ini upload_max_filesize)

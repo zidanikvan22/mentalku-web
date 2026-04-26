@@ -198,6 +198,31 @@
         const loadingOverlay = document.getElementById('loadingOverlay');
         const loadingModal = document.getElementById('loadingModal');
 
+        {{-- Error Handler (Muncul kalau API Mati/Gagal) --}}
+        @if (session('error'))
+            Swal.fire({
+                icon: 'warning',
+                title: 'Koneksi Terputus',
+                text: "{{ session('error') }}",
+                showCancelButton: true,
+                confirmButtonText: 'Coba Lagi Nanti',
+                cancelButtonText: 'Kembali ke Dashboard',
+                confirmButtonColor: '#0D9488',
+                cancelButtonColor: '#FF8966',
+                background: '#FFFFFF',
+                color: '#294C60',
+                customClass: {
+                    popup: 'rounded-[30px] shadow-xl border border-slate-100',
+                    title: 'text-2xl font-extrabold text-[#294C60] mb-2',
+                    htmlContainer: 'text-slate-500 font-medium'
+                }
+            }).then((result) => {
+                if (!result.isConfirmed) {
+                    window.location.href = "{{ route('dashboard') }}";
+                }
+            });
+        @endif
+
         ventForm.addEventListener('submit', function(e) {
             // Kita biarkan HTML5 validation jalan dulu (kalau ada)
             

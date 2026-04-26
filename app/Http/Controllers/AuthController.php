@@ -93,7 +93,7 @@ class AuthController extends Controller
             $user = Auth::user();
 
             // Redirect ke dashboard dengan pesan sukses
-            return redirect()->intended('dashboard')->with('login_success', $user->name);
+            return redirect()->route('dashboard')->with('login_success', $user->name);
         }
 
         // 4. Kalau Gagal

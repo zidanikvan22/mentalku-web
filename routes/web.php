@@ -15,7 +15,7 @@ use App\Http\Controllers\EducationController;
 // Landing Page
 Route::get('/', function () {
     return view('user.welcome');
-});
+})->name('login');
 
 // Logic Auth (Register & Login)
 Route::post('/register-process', [AuthController::class, 'registerProcess'])->name('register.process');
@@ -28,7 +28,7 @@ Route::post('/login-process', [AuthController::class, 'loginProcess'])->name('lo
 |--------------------------------------------------------------------------
 */
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'prevent-back-history'])->group(function () {
 
     // 1. Dashboard
     Route::get('/dashboard', function () {
