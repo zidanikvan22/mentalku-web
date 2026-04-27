@@ -10,31 +10,31 @@ use Illuminate\Support\Facades\Log;
 
 class EvaluationController extends Controller
 {
-    // 1. Cover Page (Reset Session di sini kalau user baru mulai)
+    // Cover Page: Reset session if user is starting fresh
     public function cover()
     {
-        // Opsional: Reset session kalau masuk sini
+        // Optional: Reset session upon entering
         // session()->forget(['evaluation_answers', 'evaluation_vent']);
         return view('user.self-evaluation-cover');
     }
 
-    // 2. Start Test (Logic Reset)
+    // Start Test: Clear all previous session data
     public function start()
     {
-        // Hapus session lama biar bersih
+        // Remove old sessions to start fresh
         session()->forget(['evaluation_answers', 'evaluation_vent']);
         return redirect()->route('evaluation.question', ['page' => 1]);
     }
 
-    // 3. Menampilkan Pertanyaan (Page 1, 2, 3)
+    // Display questions (Pages 1, 2, 3)
     public function question($page)
     {
-        // Validasi page cuma boleh 1-3
+        // Validate page parameter to only allow 1-3
         if ($page < 1 || $page > 3) {
             return redirect()->route('evaluation.cover');
         }
 
-        // Ambil jawaban yang udah tersimpan di session (biar gak ilang pas back)
+        // Retrieve previously saved answers from session to prevent data loss on back navigation
         $existingAnswers = session('evaluation_answers', []);
 
         return view('user.self-evaluation-question', [
@@ -43,47 +43,47 @@ class EvaluationController extends Controller
         ]);
     }
 
-    // 4. Simpan Jawaban per Page
+    // Save answers per page
     public function storeQuestion(Request $request, $page)
     {
-        // Ambil data session lama
+        // Retrieve existing session data
         $answers = session('evaluation_answers', []);
 
-        // Merge jawaban baru dari form ke array session
-        // Validasi simpel: loop input name="answer_x"
+        // Merge new answers from form into session array
+        // Basic validation: loop through inputs named "answer_x"
         foreach ($request->all() as $key => $value) {
             if (str_starts_with($key, 'answer_')) {
-                // Ambil nomor soal dari key (misal answer_5 -> 5)
+                // Extract question number from key (e.g., answer_5 -> 5)
                 $questionNumber = (int) str_replace('answer_', '', $key);
                 $answers[$questionNumber] = (int) $value;
             }
         }
 
-        // Simpan balik ke session
+        // Save updated data back to session
         session(['evaluation_answers' => $answers]);
 
-        // Logic Redirect
+        // Redirect logic
         if ($page < 3) {
             return redirect()->route('evaluation.question', ['page' => $page + 1]);
         } else {
-            return redirect()->route('evaluation.vent'); // Ke halaman curhat
+            return redirect()->route('evaluation.vent'); // Redirect to venting page
         }
     }
 
-    // 5. Halaman Curhat (Vent)
+    // Venting Page
     public function vent()
     {
         // ANTI-BACK BUTTON LOGIC:
-        // Cek apakah user punya session 21 jawaban. Kalau gak ada, berarti dia nge-klik 'Back' dari halaman hasil.
+        // Ensure user has exactly 21 answers in session. If not, they likely clicked 'Back' from the results page.
         $answersAssoc = session('evaluation_answers', []);
         if (count($answersAssoc) < 21) {
             return redirect()->route('evaluation.cover')->with('error', 'Sesi evaluasi sudah selesai atau tidak valid. Silakan mulai ulang.');
         }
 
-        // Ambil tulisan yang mungkin udah diketik sebelumnya
+        // Retrieve any previously typed venting text
         $existingVent = session('evaluation_vent', '');
         
-        // KASIH HEADER NO-CACHE BIAR BROWSER GAK BIKIN HALAMAN HANTU
+        // APPLY NO-CACHE HEADERS TO PREVENT BROWSER CACHING ISSUES
         return response()
             ->view('user.self-evaluation-vent', compact('existingVent'))
             ->header('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate')
@@ -91,10 +91,10 @@ class EvaluationController extends Controller
             ->header('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
     }
 
-    // 6. Submit Akhir & Mocking API
+    // Final Submit & API Call
     public function submit(Request $request)
     {
-        // 0. Validasi Input (Wajib isi, min 10 karakter, max 1000)
+        // Validate input data (required, min 10 chars, max 1000 chars)
         $request->validate([
             'vent' => 'required|string|min:10|max:1000'
         ], [
@@ -103,30 +103,30 @@ class EvaluationController extends Controller
             'vent.max' => 'Ceritamu terlalu panjang (maksimal 1000 karakter).'
         ]);
 
-        // 1. Simpan curhatan ke session
+        // Save venting text to session
         session(['evaluation_vent' => $request->vent]);
 
-        // 2. Ambil Semua Data & Formatting
+        // Retrieve and format all data
         $answersAssoc = session('evaluation_answers', []);
-        ksort($answersAssoc); // Pastikan urutan nomor soal 1 sampai 21 berurutan
-        $answers = array_values($answersAssoc); // Ratakan jadi array murni [0, 1, 2, ...]
+        ksort($answersAssoc); // Ensure question numbers 1 to 21 are sequentially ordered
+        $answers = array_values($answersAssoc); // Flatten into a pure array [0, 1, 2, ...]
 
         $vent = session('evaluation_vent', '');
 
-        // 3. Tembak API Python dengan Try-Catch (Anti-Crash System)
+        // Call Python API wrapped in Try-Catch to prevent crashes
         try {
-            // Timeout 15 detik biar kalau Gemini/Model agak lemot, web gak langsung RTO
+            // Set 15 seconds timeout to prevent request timeout issues if model processing is slow
             /** @var \Illuminate\Http\Client\Response $response */
             $response = Http::timeout(15)->post('http://127.0.0.1:8001/api/v1/evaluate', [
                 'answers' => $answers,
                 'vent_text' => $vent
             ]);
 
-            // Kalau respon HTTP 200 OK
+            // Check if HTTP response is 200 OK
             if ($response->successful()) {
                 $data = $response->json();
 
-                // 4. Simpan ke Database MySQL
+                // Save results to MySQL database
                 $result = EvaluationResult::create([
                     'user_id' => Auth::id(),
                     'depression_score' => $data['scores']['depression'],
@@ -142,31 +142,31 @@ class EvaluationController extends Controller
                     'final_level' => $data['final_level'],
                 ]);
 
-                // Bersihkan session karena udah selesai evaluasi
+                // Clear session data as evaluation is complete
                 session()->forget(['evaluation_answers', 'evaluation_vent']);
 
-                // Redirect ke Hasil
+                // Redirect to results page
                 return redirect()->route('evaluation.result', ['id' => $result->id]);
             } else {
-                // API merespon tapi ada error (misal 400 Bad Request atau 500 Internal Server Error)
+                // API responded but with an error (e.g., 400 Bad Request or 500 Internal Server Error)
                 Log::error('API Python Error Response: ' . $response->body());
                 return back()->with('error', 'Gagal memproses evaluasi. Pastikan kamu mengisi 21 soal dengan lengkap.');
             }
 
         } catch (\Exception $e) {
-            // Server Python Mati atau Koneksi Putus
+            // Python server is offline or connection timed out
             Log::error('API Python Connection Failed: ' . $e->getMessage());
             return back()->with('error', 'Server Evaluasi AI sedang sibuk atau offline. Silakan coba beberapa saat lagi.');
         }
     }
 
-    // 7. Halaman Hasil
+    // Results Page
     public function showResult($id)
     {
         $result = EvaluationResult::where('user_id', Auth::id())->findOrFail($id);
 
-        // --- DUAL-MODALITY CATEGORY ENGINE ---
-        // 1. Mapping Keparahan DASS-21
+        // DUAL-MODALITY CATEGORY ENGINE
+        // Map DASS-21 severity levels
         $severityMap = ['Normal' => 0, 'Ringan' => 1, 'Sedang' => 2, 'Parah' => 3, 'Sangat Parah' => 4];
         
         $dassIndices = [
@@ -178,7 +178,7 @@ class EvaluationController extends Controller
         $maxIndex = max($dassIndices);
         $targetCategories = [];
 
-        // Ambil kategori objektif yang paling parah
+        // Retrieve the most severe objective categories
         if ($maxIndex > 0) {
             foreach ($dassIndices as $category => $index) {
                 if ($index == $maxIndex) {
@@ -187,20 +187,20 @@ class EvaluationController extends Controller
             }
         }
 
-        // 2. Tambahkan kategori subjektif dari Machine Learning
+        // Append subjective category from Machine Learning predictions
         if (!empty($result->ml_label) && $result->ml_label !== 'Normal') {
             $targetCategories[] = $result->ml_label;
         }
 
-        // 3. Bersihkan Duplikat (Misal DASS = Depresi, LSTM = Depresi)
+        // Remove duplicates (e.g., DASS = Depresi, LSTM = Depresi)
         $targetCategories = array_unique($targetCategories);
 
-        // 4. Fallback Protocol (Kalau user ternyata super sehat)
+        // Fallback Protocol (If user is completely healthy)
         if (empty($targetCategories)) {
             $targetCategories = ['Rawat Diri'];
         }
 
-        // 5. Query Eksekusi: Ambil 4 artikel acak yang relevan dengan kondisi user
+        // Query execution: Retrieve 4 random articles relevant to the user's condition
         $relatedEducations = \App\Models\Education::whereIn('category', $targetCategories)
             ->inRandomOrder()
             ->take(4)
@@ -209,12 +209,12 @@ class EvaluationController extends Controller
         return view('user.self-evaluation-results', compact('result', 'relatedEducations'));
     }
 
-    // 8. Halaman Activity History Detail
+    // Activity History Detail Page
     public function historyDetail($id)
     {
         $result = EvaluationResult::where('user_id', Auth::id())->findOrFail($id);
         
-        // Kita hitung ini tes ke-berapa milik user tersebut
+        // Calculate the chronological order of this test for the user
         $testNumber = EvaluationResult::where('user_id', Auth::id())
             ->where('created_at', '<=', $result->created_at)
             ->count();

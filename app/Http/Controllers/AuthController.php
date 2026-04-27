@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    // Handle Register Logic
+    // Handle user registration
     public function registerProcess(Request $request)
     {
-        // 1. Validasi Input
+        // Validate input data (including minimum age and strong password regex)
         $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:50|unique:users,username|alpha_dash',
@@ -52,7 +52,7 @@ class AuthController extends Controller
             return back()->withErrors($validator)->withInput()->with('is_register', true);
         }
 
-        // 2. Create User
+        // Create user with a securely hashed password and default 'user' role
         $user = User::create([
             'name' => $request->name,
             'username' => $request->username,
@@ -63,14 +63,14 @@ class AuthController extends Controller
             'role' => 'user', // Default role
         ]);
 
-        // Redirect ke landing page agar bisa login
+        // Redirect to landing page to allow login
         return redirect('/')->with('register_success', 'Hore! Akun kamu berhasil dibuat. Silakan masuk untuk memulai.');
     }
 
-    // Handle Login Logic
+    // Handle user login
     public function loginProcess(Request $request)
     {
-        // 1. Validasi Strict Email
+        // Validate that email and password are provided
         $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
@@ -84,23 +84,23 @@ class AuthController extends Controller
             return back()->withErrors($validator)->withInput()->with('is_login', true);
         }
 
-        // 2. Ambil hanya email & password
+        // Extract only the necessary credentials
         $credentials = $request->only('email', 'password');
 
-        // 3. Attempt Login
+        // Verify credentials against database and regenerate session for security
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             $user = Auth::user();
 
-            // Redirect ke dashboard dengan pesan sukses
+            // Redirect to dashboard on success
             return redirect()->route('dashboard')->with('login_success', $user->name);
         }
 
-        // 4. Kalau Gagal
+        // Return back with error message if authentication fails
         return back()->with('login_error', 'Email atau kata sandi yang kamu masukkan salah.')->withInput()->with('is_login', true);
     }
 
-    // Handle Logout
+    // Handle user logout
     public function logout(Request $request)
     {
         $name = '';
@@ -108,10 +108,14 @@ class AuthController extends Controller
             $name = Auth::user()->name;
         }
 
+        // Clear authentication session
         Auth::logout();
+        
+        // Invalidate session data and regenerate security token
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('logout_success', $name); // Balik ke landing page
+        // Redirect back to the landing page
+        return redirect('/')->with('logout_success', $name);
     }
 }

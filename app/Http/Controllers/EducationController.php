@@ -11,19 +11,15 @@ class EducationController extends Controller
     {
         $query = Education::query();
 
-// --- 1. LOGIC FILTER KATEGORI (DIRECT MATCHING) ---
+        // Filter by category directly using an exact database match
         if ($request->has('category') && $request->category != 'Semua') {
-            // Langsung lempar request category karena namanya udah 100% sama dengan Database
             $query->where('category', $request->category); 
         }
 
-        // --- 2. LOGIC SORTING (NULL TERAKHIR) ---
-        // Penjelasan: 
-        // - published_at IS NULL -> Bernilai 0 kalau ada tanggal, 1 kalau null. Ascending berarti 0 dulu (data ada) baru 1 (null).
-        // - published_at DESC -> Urutkan tanggal dari yang terbaru.
+        // Sort by published date (newest first), ensuring null dates appear last
         $query->orderByRaw('published_at IS NULL, published_at DESC');
 
-        // 3. Pagination
+        // Paginate results and retain query parameters for pagination links
         $educations = $query->paginate(12)->appends($request->query());
 
         return view('user.education', [
