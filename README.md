@@ -23,6 +23,14 @@
 
 <br>
 
+<div align="center">
+  <a href="https://drive.google.com/file/d/1mULzl5CfPTrK2A4umya-Tlc4hyA85GPv/view?usp=drive_link" target="_blank">
+    <img src="https://img.shields.io/badge/🎬_Tonton_Video_Demo-4285F4?style=for-the-badge&logo=googledrive&logoColor=white" alt="Video Demo" />
+  </a>
+</div>
+
+---
+
 ## 📖 Deskripsi Umum
 
 **Mentalku-Web** adalah platform aplikasi berbasis web yang dirancang untuk menjadi *"sahabat pertama"* bagi individu dalam mengenali dan mengevaluasi kondisi kesehatan mental mereka secara mandiri. Platform ini menyediakan proses skrining psikologis yang interaktif, privat, dan ramah pengguna — ditujukan terutama untuk **generasi Z, mahasiswa, dan pekerja** yang ingin memahami kondisi emosional mereka tanpa tekanan.

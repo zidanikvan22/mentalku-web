@@ -118,6 +118,7 @@ class EvaluationController extends Controller
             // Set 15 seconds timeout to prevent request timeout issues if model processing is slow
             /** @var \Illuminate\Http\Client\Response $response */
             $response = Http::timeout(15)->post('http://127.0.0.1:8001/api/v1/evaluate', [
+            // $response = Http::timeout(15)->post(env('ML_API_URL'). '/api/v1/evaluate', [
                 'answers' => $answers,
                 'vent_text' => $vent
             ]);
